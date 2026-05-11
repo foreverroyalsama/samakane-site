@@ -2,12 +2,10 @@
   "videos": [
     { "file": "video-01.mp4", "title": "Coffee Song", "width": 3840, "height": 2160 },
     { "file": "video-02.mp4", "title": "Video 02", "width": 1920, "height": 1080 },
-    { "file": "video-03.mp4", "title": "Video 03", "width": 1920, "height": 1080 },
-    { "file": "video-04.mp4", "title": "Full Clip", "width": 1920, "height": 1080 },
     { "file": "video-05.mp4", "title": "Video 05", "width": 1920, "height": 1080 },
     { "file": "video-06.mp4", "title": "Motion Control", "width": 1920, "height": 1080 },
     { "file": "video-07.mp4", "title": "Night Strut", "width": 3840, "height": 2160 },
-{ "file": "video-09.mp4", "title": "Country Side", "width": 1920, "height": 1080 },
+    { "file": "video-09.mp4", "title": "Country Side", "width": 1920, "height": 1080 },
     { "file": "video-10.mp4", "title": "Fringe Dresses", "width": 1920, "height": 1080 },
     { "file": "video-11.mp4", "title": "Natural Portrait", "width": 1920, "height": 1080 },
     { "file": "video-12.mp4", "title": "Fantasy", "width": 1920, "height": 1080 },

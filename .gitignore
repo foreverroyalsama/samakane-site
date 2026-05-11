@@ -1,0 +1,19 @@
+.DS_Store
+Thumbs.db
+*.log
+node_modules/
+.vscode/
+.idea/
+*.tmp
+
+# Source files (uncompressed originals you might keep around but don't need to deploy)
+portrait-original-*.png
+portrait-floating.jpg
+preview-*.png
+sounds/
+
+# Local Claude conversation logs if any
+*.claude.md
+
+# Archive files
+*.zip

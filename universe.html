@@ -1,0 +1,3510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sama Kane — Universe</title>
+<meta name="description" content="The Sama Kane universe — music, films, gallery, and more." />
+
+<!-- Open Graph -->
+<meta property="og:title" content="Sama Kane — Universe" />
+<meta property="og:description" content="Music, films, gallery, and more." />
+<meta property="og:image" content="og-image.jpg" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://samakane.com/universe.html" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Sama Kane — Universe" />
+<meta name="twitter:image" content="og-image.jpg" />
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="media-manager.js"></script>
+<script>
+  /* ============================================
+     ADMIN MODE
+     ============================================
+     Only Sama sees the upload buttons & photo editor.
+     Activate by visiting: ?admin=samakane2026
+     This setting persists in localStorage on YOUR browser only.
+     Visitors who don't know the URL parameter see a read-only site.
+     ============================================ */
+  (function() {
+    const ADMIN_KEY = 'sama_admin_mode';
+    const SECRET = 'samakane2026'; // CHANGE THIS to whatever you want before deploying
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('admin') === SECRET) {
+      try { localStorage.setItem(ADMIN_KEY, '1'); } catch(e) {}
+      // Clean the URL so the secret isn't visible in the address bar
+      const url = new URL(window.location);
+      url.searchParams.delete('admin');
+      window.history.replaceState({}, '', url);
+    }
+    if (params.get('admin') === 'logout') {
+      try { localStorage.removeItem(ADMIN_KEY); } catch(e) {}
+      const url = new URL(window.location);
+      url.searchParams.delete('admin');
+      window.history.replaceState({}, '', url);
+    }
+
+    let isAdmin = false;
+    try { isAdmin = localStorage.getItem(ADMIN_KEY) === '1'; } catch(e) {}
+    window.__SAMA_ADMIN__ = isAdmin;
+
+    // Inject CSS that hides admin-only UI when not in admin mode
+    const style = document.createElement('style');
+    style.textContent = isAdmin ? `
+      /* Admin badge in the corner so you know you're logged in */
+      body::after {
+        content: '◆ ADMIN MODE';
+        position: fixed;
+        top: 18px; left: 50%;
+        transform: translateX(-50%);
+        z-index: 9500;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.62rem;
+        letter-spacing: 0.25em;
+        color: #c9a961;
+        background: rgba(10,10,10,0.85);
+        backdrop-filter: blur(8px);
+        padding: 6px 14px;
+        border: 1px solid rgba(201,169,97,0.3);
+        border-radius: 100px;
+        pointer-events: none;
+      }
+    ` : `
+      /* Visitor mode — hide admin UI */
+      .media-uploader,
+      .photo-edit-btn,
+      .photo-modal,
+      .media-delete { display: none !important; }
+      /* If the empty-state shows because the visitor hasn't uploaded anything, hide it */
+      .empty-state { display: none !important; }
+    `;
+    document.head.appendChild(style);
+  })();
+</script>
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --ink-2: #141414;
+    --ink-3: #1d1d1d;
+    --bone: #f5f0e8;
+    --cream: #ebe4d6;
+    --paper: #f9f5ee;
+    --gold: #c9a961;
+    --gold-bright: #e0bc6e;
+    --rust: #b54e2c;
+    --line: rgba(245, 240, 232, 0.12);
+    --line-strong: rgba(245, 240, 232, 0.28);
+    --serif: 'Fraunces', 'Times New Roman', serif;
+    --sans: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+    --ease: cubic-bezier(0.65, 0, 0.35, 1);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--ink);
+    color: var(--bone);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    cursor: none;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' /></filter><rect width='100%25' height='100%25' filter='url(%23n)' /></svg>");
+  }
+
+  /* cursor */
+  .cursor-dot, .cursor-ring {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    border-radius: 50%;
+    transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease;
+    will-change: transform;
+  }
+  .cursor-dot { width: 6px; height: 6px; background: var(--gold); transform: translate(-50%, -50%); }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid var(--bone);
+    transform: translate(-50%, -50%);
+    transition: transform 0.4s var(--ease-out), width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring.hover { width: 70px; height: 70px; border-color: var(--gold); }
+  @media (max-width: 900px), (pointer: coarse) {
+    body { cursor: auto; }
+    .cursor-dot, .cursor-ring { display: none; }
+  }
+  ::selection { background: var(--gold); color: var(--ink); }
+
+  /* page enter animation */
+  .page-enter {
+    position: fixed;
+    inset: 0;
+    background: var(--ink);
+    z-index: 9997;
+    transform: translateY(0);
+    transition: transform 1s var(--ease-out);
+    pointer-events: none;
+  }
+  .page-enter.done { transform: translateY(-100%); }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 22px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line);
+    transition: padding 0.3s ease;
+  }
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  /* BACK LINK — featured */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--bone);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 10px 16px 10px 14px;
+    border: 1px solid var(--line-strong);
+    border-radius: 100px;
+    transition: all 0.4s var(--ease-out);
+    position: relative;
+    overflow: hidden;
+  }
+  .back-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: translateX(-101%);
+    transition: transform 0.5s var(--ease-out);
+    z-index: 0;
+  }
+  .back-link:hover::before { transform: translateX(0); }
+  .back-link:hover { color: var(--ink); border-color: var(--gold); }
+  .back-link span, .back-link svg { position: relative; z-index: 1; }
+  .back-link svg {
+    width: 14px; height: 14px;
+    transition: transform 0.4s var(--ease-out);
+  }
+  .back-link:hover svg { transform: translateX(-4px); }
+
+  .nav-mark {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--bone);
+    text-decoration: none;
+  }
+  .nav-mark::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 4px;
+    list-style: none;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+  }
+  .nav-links a {
+    color: var(--bone);
+    text-decoration: none;
+    padding: 10px 16px;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+  .nav-links a::before {
+    content: '';
+    position: absolute;
+    bottom: 6px; left: 16px; right: 16px;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s var(--ease-out);
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::before { transform: scaleX(1); }
+  .nav-links a.active { color: var(--gold); }
+  .nav-links a.active::before { transform: scaleX(1); }
+
+  @media (max-width: 968px) {
+    nav { padding: 16px 20px; }
+    .nav-mark { font-size: 1.1rem; }
+    .nav-links { display: none; }
+    .back-link { padding: 8px 12px; font-size: 0.62rem; }
+  }
+
+  /* HERO TOP for Universe page */
+  .universe-hero {
+    min-height: 60vh;
+    padding: 160px 48px 80px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .universe-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 80% 50%, rgba(201, 169, 97, 0.06), transparent 60%);
+    z-index: 0;
+  }
+  .uh-portrait {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 38%;
+    z-index: 1;
+    opacity: 0.6;
+    pointer-events: none;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .uh-portrait img {
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: contrast(1.05);
+    mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.5) 30%, black 60%, black 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.5) 30%, black 60%, black 100%);
+  }
+  .uh-bg-text {
+    position: absolute;
+    bottom: -40px;
+    left: -2vw;
+    font-family: var(--serif);
+    font-size: clamp(8rem, 22vw, 22rem);
+    font-weight: 200;
+    font-style: italic;
+    color: var(--ink-2);
+    line-height: 0.85;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    letter-spacing: -0.04em;
+  }
+  .uh-content { position: relative; z-index: 2; }
+  .uh-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .uh-eyebrow::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--gold);
+  }
+  .uh-title {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 7.5vw, 7rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 24px;
+  }
+  .uh-title em { font-style: italic; color: var(--gold); }
+  .uh-meta {
+    display: flex;
+    gap: 40px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.5);
+    flex-wrap: wrap;
+  }
+  .uh-meta span:not(:last-child)::after {
+    content: '·';
+    margin-left: 40px;
+    opacity: 0.4;
+  }
+
+  @media (max-width: 768px) {
+    .universe-hero { padding: 120px 20px 60px; min-height: auto; }
+    .uh-portrait { display: none; }
+  }
+
+  /* SECTIONS */
+  section.content {
+    padding: 130px 48px;
+    position: relative;
+  }
+  @media (max-width: 768px) {
+    section.content { padding: 80px 20px; }
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 70px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .section-num {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2.4rem, 5.5vw, 5rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .section-desc {
+    max-width: 360px;
+    font-size: 0.92rem;
+    color: rgba(245, 240, 232, 0.6);
+    line-height: 1.6;
+  }
+
+  /* MUSIC */
+  .music { background: var(--ink-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .player-wrap {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 60px;
+  }
+  @media (max-width: 968px) { .player-wrap { grid-template-columns: 1fr; gap: 40px; } }
+
+  .player {
+    background: var(--ink);
+    border: 1px solid var(--line);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .player::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .now-playing-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .now-playing-label .equalizer { display: inline-flex; gap: 2px; align-items: flex-end; height: 14px; }
+  .now-playing-label .equalizer span { width: 2px; background: var(--gold); animation: eq 1s ease-in-out infinite; }
+  .now-playing-label .equalizer span:nth-child(1) { height: 60%; animation-delay: 0s; }
+  .now-playing-label .equalizer span:nth-child(2) { height: 100%; animation-delay: 0.2s; }
+  .now-playing-label .equalizer span:nth-child(3) { height: 40%; animation-delay: 0.4s; }
+  .now-playing-label .equalizer span:nth-child(4) { height: 80%; animation-delay: 0.1s; }
+  @keyframes eq {
+    0%, 100% { transform: scaleY(0.4); }
+    50% { transform: scaleY(1); }
+  }
+  .player.paused .equalizer span { animation-play-state: paused; transform: scaleY(0.4); }
+
+  .track-title {
+    font-family: var(--serif);
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .track-artist { font-size: 0.92rem; color: rgba(245, 240, 232, 0.6); margin-bottom: 28px; }
+
+  .visualizer {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    margin-bottom: 24px;
+  }
+  .visualizer span {
+    flex: 1;
+    background: linear-gradient(to top, var(--gold), var(--bone));
+    height: 20%;
+    border-radius: 1px;
+    transition: height 0.15s ease;
+    opacity: 0.7;
+  }
+  .player.paused .visualizer span { height: 8% !important; }
+
+  /* ============================================
+     SPOTIFY ARTIST EMBED (Originals tab)
+     ============================================ */
+  .spotify-player {
+    background: var(--ink);
+    border: 1px solid var(--line);
+    padding: 32px 32px 28px;
+    position: relative;
+    overflow: hidden;
+    display: none; /* shown by JS when 'originals' tab is active */
+    flex-direction: column;
+  }
+  .spotify-player.active { display: flex; }
+  .spotify-player::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .spotify-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .spotify-open-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: rgba(245, 240, 232, 0.7);
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+  }
+  .spotify-open-link:hover { color: #1db954; }
+  .spotify-open-link svg { width: 16px; height: 16px; color: #1db954; }
+  .spotify-player iframe {
+    width: 100%;
+    border: 0;
+    border-radius: 12px;
+    display: block;
+    background: #181818;
+  }
+  .spotify-note {
+    margin-top: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    color: rgba(245, 240, 232, 0.4);
+    line-height: 1.4;
+  }
+  .spotify-note svg { flex-shrink: 0; margin-top: 2px; color: var(--gold); }
+
+  /* Originals-side panel (replaces the empty track-list when Originals active) */
+  .originals-side {
+    display: none;
+    flex-direction: column;
+    padding: 20px 0;
+  }
+  .originals-side.active { display: flex; }
+  .originals-side-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+  }
+  .originals-platforms {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .originals-platform {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    color: var(--bone);
+    text-decoration: none;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+    transition: all 0.4s var(--ease-out);
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+  }
+  .originals-platform:hover {
+    color: var(--gold);
+    padding-left: 24px;
+    background: rgba(201, 169, 97, 0.04);
+  }
+
+  /* Hide custom player when on Originals */
+  .player-wrap.show-spotify .player,
+  .player-wrap.show-spotify .track-list { display: none; }
+  .player-wrap.show-spotify .spotify-player,
+  .player-wrap.show-spotify .originals-side { display: flex; }
+
+  /* When showing custom player (Curated/Ambient), hide spotify side */
+  .player-wrap:not(.show-spotify) .spotify-player,
+  .player-wrap:not(.show-spotify) .originals-side { display: none; }
+
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: rgba(245, 240, 232, 0.6);
+    letter-spacing: 0.1em;
+  }
+  .progress-bar {
+    flex: 1;
+    height: 2px;
+    background: var(--line);
+    cursor: none;
+    position: relative;
+    overflow: visible;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--bone);
+    width: 0%;
+    transition: width 0.1s linear;
+    position: relative;
+  }
+  .progress-fill::after {
+    content: '';
+    position: absolute;
+    right: -5px; top: 50%;
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    transform: translateY(-50%) scale(0);
+    transition: transform 0.3s ease;
+  }
+  .progress-bar:hover .progress-fill::after { transform: translateY(-50%) scale(1); }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    margin-bottom: 24px;
+  }
+  .ctrl-btn {
+    background: none;
+    border: none;
+    color: var(--bone);
+    cursor: none;
+    padding: 8px;
+    transition: color 0.3s, transform 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ctrl-btn:hover { color: var(--gold); transform: scale(1.1); }
+  .ctrl-btn svg { width: 22px; height: 22px; }
+  .ctrl-btn.play {
+    width: 60px; height: 60px;
+    border: 1px solid var(--bone);
+    border-radius: 50%;
+    transition: all 0.4s var(--ease-out);
+    position: relative;
+    overflow: hidden;
+  }
+  .ctrl-btn.play::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 0.4s var(--ease-out);
+  }
+  .ctrl-btn.play:hover { border-color: var(--gold); color: var(--ink); }
+  .ctrl-btn.play:hover::before { transform: scale(1); }
+  .ctrl-btn.play svg { position: relative; z-index: 1; width: 18px; height: 18px; }
+
+  .volume-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.5);
+  }
+  .volume-bar { flex: 1; height: 2px; background: var(--line); cursor: none; position: relative; }
+  .volume-fill { height: 100%; background: var(--bone); width: 70%; }
+
+  .playlist { display: flex; flex-direction: column; }
+  .playlist-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .playlist-tab {
+    background: none;
+    border: none;
+    color: rgba(245, 240, 232, 0.5);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    padding: 14px 20px;
+    cursor: none;
+    position: relative;
+    transition: color 0.3s;
+  }
+  .playlist-tab::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.4s var(--ease-out);
+  }
+  .playlist-tab.active { color: var(--bone); }
+  .playlist-tab.active::after { transform: scaleX(1); }
+  .playlist-tab:hover { color: var(--bone); }
+
+  .track-list {
+    list-style: none;
+    overflow-y: auto;
+    max-height: 420px;
+  }
+  .track-list::-webkit-scrollbar { width: 4px; }
+  .track-list::-webkit-scrollbar-track { background: var(--ink); }
+  .track-list::-webkit-scrollbar-thumb { background: var(--line-strong); }
+  .track-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 18px;
+    align-items: center;
+    padding: 16px 8px;
+    border-bottom: 1px solid var(--line);
+    cursor: none;
+    transition: background 0.3s, padding 0.3s;
+    position: relative;
+  }
+  .track-item:hover { background: rgba(201, 169, 97, 0.06); padding-left: 16px; }
+  .track-item.playing { background: rgba(201, 169, 97, 0.08); padding-left: 16px; }
+  .track-item.playing .track-name { color: var(--gold); }
+  .track-num { font-family: var(--mono); font-size: 0.75rem; color: rgba(245, 240, 232, 0.4); width: 24px; }
+  .track-info { min-width: 0; }
+  .track-name {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 400;
+    transition: color 0.3s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .track-sub { font-size: 0.78rem; color: rgba(245, 240, 232, 0.5); margin-top: 2px; }
+  .track-duration { font-family: var(--mono); font-size: 0.7rem; color: rgba(245, 240, 232, 0.5); }
+
+  /* VIDEOS */
+  .videos { background: var(--ink); }
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+  }
+  .video-card {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    cursor: none;
+    background: var(--ink-2);
+  }
+  .video-card .thumb {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s var(--ease-out), filter 0.4s;
+    filter: grayscale(0.4) brightness(0.7);
+  }
+  .video-card:hover .thumb { transform: scale(1.06); filter: grayscale(0) brightness(1); }
+  .video-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(10, 10, 10, 0.95) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+  .video-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid transparent;
+    transition: border-color 0.4s, inset 0.4s var(--ease-out);
+    z-index: 2;
+    pointer-events: none;
+  }
+  .video-card:hover::after { border-color: var(--gold); inset: 12px; }
+  .video-info {
+    position: absolute;
+    left: 24px; right: 24px; bottom: 20px;
+    z-index: 3;
+    pointer-events: none;
+  }
+  .video-meta {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .video-title {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--bone);
+  }
+  .video-play {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    width: 70px; height: 70px;
+    border: 1px solid var(--bone);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    opacity: 0;
+    transition: all 0.5s var(--ease-out);
+    background: rgba(10, 10, 10, 0.4);
+    backdrop-filter: blur(10px);
+  }
+  .video-card:hover .video-play { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  .video-play svg { width: 22px; height: 22px; margin-left: 3px; color: var(--bone); }
+
+  /* lightbox */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 10, 0.96);
+    backdrop-filter: blur(20px);
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s, visibility 0.5s;
+  }
+  .lightbox.active { opacity: 1; visibility: visible; }
+  .lightbox-content {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    aspect-ratio: 16/9;
+    transform: scale(0.92);
+    transition: transform 0.6s var(--ease-out);
+  }
+  .lightbox.active .lightbox-content { transform: scale(1); }
+  .lightbox-content iframe { width: 100%; height: 100%; border: none; }
+  .lightbox-close {
+    position: absolute;
+    top: -40px; right: 0;
+    background: none;
+    border: none;
+    color: var(--bone);
+    cursor: none;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    transition: color 0.3s;
+  }
+  .lightbox-close:hover { color: var(--gold); }
+
+  /* GALLERY */
+  .gallery { background: var(--ink-2); }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  @media (max-width: 768px) {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  }
+  @media (max-width: 440px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    cursor: none;
+    background: var(--ink);
+    aspect-ratio: 1 / 1; /* uniform squares */
+    display: block;
+  }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* show the full photo, no cropping */
+    display: block;
+    transition: transform 0.7s var(--ease-out), filter 0.5s;
+    filter: grayscale(0.15);
+    background: var(--ink); /* fills letterbox area in same color */
+  }
+  .gallery-item:hover img { transform: scale(1.04); filter: grayscale(0); }
+  .gallery-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 50%, rgba(201, 169, 97, 0.15));
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+  }
+  .gallery-item:hover::after { opacity: 1; }
+  .gallery-item .gallery-label {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--bone);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s, transform 0.4s var(--ease-out);
+    z-index: 2;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .gallery-item:hover .gallery-label { opacity: 1; transform: translateY(0); }
+
+  /* ============================================
+     MEDIA UPLOADER (shared for videos + photos)
+     ============================================ */
+  .media-uploader {
+    border: 1.5px dashed var(--line-strong);
+    padding: 40px 28px;
+    text-align: center;
+    cursor: none;
+    transition: all 0.4s var(--ease-out);
+    margin-bottom: 48px;
+    background: rgba(20, 20, 20, 0.4);
+  }
+  .media-uploader:hover, .media-uploader.dragover {
+    border-color: var(--gold);
+    background: rgba(201, 169, 97, 0.05);
+  }
+  .media-uploader-icon {
+    width: 36px; height: 36px;
+    color: var(--gold);
+    margin: 0 auto 14px;
+    display: block;
+    transition: transform 0.5s var(--ease-out);
+  }
+  .media-uploader:hover .media-uploader-icon { transform: translateY(-4px); }
+  .media-uploader-text {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    color: var(--bone);
+    margin-bottom: 8px;
+  }
+  .media-uploader-text span {
+    color: var(--gold);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .media-uploader-hint {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.4);
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 30px 20px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.3);
+  }
+  .empty-state[hidden] { display: none; }
+
+  /* Upload progress notification */
+  .upload-progress {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink);
+    border: 1px solid var(--gold);
+    padding: 16px 28px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--bone);
+    z-index: 9600;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.4s var(--ease-out);
+  }
+  .upload-progress.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .upload-progress::before {
+    content: '';
+    width: 14px; height: 14px;
+    border: 2px solid var(--line-strong);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  /* ============================================
+     UPLOADED VIDEOS GRID
+     ============================================ */
+  .upload-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    align-items: start;
+  }
+  .upload-grid:empty { display: none; }
+
+  /* Landscape videos take 2 columns on wide screens for a more balanced look */
+  @media (min-width: 900px) {
+    .upload-grid {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+    .uploaded-video:not(.portrait) {
+      grid-column: span 2;
+    }
+  }
+
+  .uploaded-video {
+    position: relative;
+    overflow: hidden;
+    background: var(--ink-2);
+    cursor: none;
+    border: 1px solid var(--line);
+    aspect-ratio: 16/9; /* fallback; overridden inline */
+  }
+  /* Portrait videos: cap height so they don't dominate */
+  .uploaded-video.portrait {
+    max-height: 600px;
+  }
+  .uploaded-video video {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    background: #000;
+    display: block;
+  }
+  .uploaded-video img.thumb {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    background: #000;
+    transition: transform 0.8s var(--ease-out), filter 0.4s;
+    filter: brightness(0.9);
+  }
+  .uploaded-video:hover img.thumb { transform: scale(1.03); filter: brightness(1); }
+  .uploaded-video::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(10, 10, 10, 0.92) 100%);
+    z-index: 1;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.4s;
+  }
+  .uploaded-video.playing::before { opacity: 0; }
+  .uploaded-video-info {
+    position: absolute;
+    left: 18px; right: 18px; bottom: 16px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .uploaded-video.playing .uploaded-video-info { opacity: 0; transition: opacity 0.3s; }
+  .uploaded-video-name {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    color: var(--bone);
+    line-height: 1.2;
+    margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .uploaded-video-meta {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .uploaded-video-play {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 64px; height: 64px;
+    border: 1px solid var(--bone);
+    border-radius: 50%;
+    background: rgba(10, 10, 10, 0.4);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: all 0.4s var(--ease-out);
+  }
+  .uploaded-video:hover .uploaded-video-play {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--ink);
+  }
+  .uploaded-video.playing .uploaded-video-play { opacity: 0; pointer-events: none; }
+  .uploaded-video-play svg { width: 20px; height: 20px; margin-left: 3px; }
+
+  /* delete button — shared */
+  .media-delete {
+    position: absolute;
+    top: 12px; right: 12px;
+    width: 32px; height: 32px;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    color: var(--bone);
+    cursor: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 4;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.3s var(--ease-out);
+  }
+  .uploaded-video:hover .media-delete,
+  .gallery-item:hover .media-delete { opacity: 1; transform: scale(1); }
+  .media-delete:hover {
+    background: #b54e2c;
+    border-color: #b54e2c;
+    color: var(--bone);
+    transform: scale(1.1) !important;
+  }
+  .media-delete svg { width: 14px; height: 14px; }
+
+  /* override gallery to allow uploaded items + delete buttons */
+  .gallery-item {
+    position: relative;
+  }
+
+  /* ============================================
+     PLATFORMS GRID (streaming services)
+     ============================================ */
+  .platforms-section {
+    margin-top: 80px;
+    padding-top: 60px;
+    border-top: 1px solid var(--line);
+  }
+  .platforms-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .platforms-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 16px;
+  }
+  .platforms-title {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .platforms-title em { font-style: italic; color: var(--gold); }
+  .platforms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .platform-card {
+    background: var(--ink);
+    padding: 24px 24px;
+    text-decoration: none;
+    color: var(--bone);
+    transition: background 0.4s;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    cursor: none;
+  }
+  .platform-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(201,169,97,0.08), transparent);
+    transition: left 0.7s var(--ease-out);
+  }
+  .platform-card:hover { background: var(--ink-2); }
+  .platform-card:hover::before { left: 100%; }
+  .platform-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .platform-cat {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .platform-arrow {
+    width: 16px; height: 16px;
+    color: var(--bone);
+    opacity: 0.4;
+    transition: all 0.4s var(--ease-out);
+  }
+  .platform-card:hover .platform-arrow {
+    color: var(--gold);
+    opacity: 1;
+    transform: rotate(-45deg);
+  }
+  .platform-name {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .platform-handle {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: rgba(245, 240, 232, 0.45);
+    letter-spacing: 0.08em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* ============================================
+     FILMS / YOUTUBE PLAYLIST PLAYER
+     ============================================ */
+  .films { background: var(--ink); }
+
+  .film-player-wrap {
+    margin-bottom: 60px;
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .film-player {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #000;
+    border: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .film-player::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    z-index: 2;
+    pointer-events: none;
+  }
+  /* The stage div that holds the iframe — must fill the container */
+  #filmPlayerStage {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  #filmPlayerStage iframe,
+  .film-player iframe {
+    width: 100% !important;
+    height: 100% !important;
+    border: 0 !important;
+    display: block;
+  }
+  .film-player-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-top: 22px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .film-player-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .film-eq {
+    display: inline-flex;
+    gap: 2px;
+    align-items: flex-end;
+    height: 12px;
+  }
+  .film-eq span {
+    width: 2px;
+    background: var(--gold);
+    animation: eq 1s ease-in-out infinite;
+  }
+  .film-eq span:nth-child(1) { height: 60%; animation-delay: 0s; }
+  .film-eq span:nth-child(2) { height: 100%; animation-delay: 0.2s; }
+  .film-eq span:nth-child(3) { height: 40%; animation-delay: 0.4s; }
+  .film-eq span:nth-child(4) { height: 80%; animation-delay: 0.1s; }
+  .film-player-wrap.paused .film-eq span { animation-play-state: paused; transform: scaleY(0.4); }
+  .film-player-title {
+    font-family: var(--serif);
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    font-weight: 400;
+    line-height: 1.2;
+    max-width: 700px;
+  }
+  .film-player-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--bone);
+    text-decoration: none;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line-strong);
+    transition: all 0.4s var(--ease-out);
+  }
+  .film-player-link:hover { color: var(--gold); border-color: var(--gold); }
+  .film-player-link svg { width: 14px; height: 14px; transition: transform 0.4s var(--ease-out); }
+  .film-player-link:hover svg { transform: translate(2px, -2px) rotate(-45deg); }
+
+  /* Thumbs header */
+  .film-thumbs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .film-thumbs-label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .film-thumbs-count {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.4);
+  }
+
+  /* Thumbs grid — uniform medium thumbnails */
+  .film-thumbs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    min-height: 100px;
+  }
+  .film-thumbs-loading {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 20px;
+    gap: 16px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.4);
+  }
+  .film-thumbs-loading .bg-processing-spinner {
+    width: 28px; height: 28px;
+    margin: 0;
+  }
+
+  .film-thumb {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    cursor: none;
+    background: var(--ink-2);
+    border: 1px solid var(--line);
+    transition: border-color 0.4s, transform 0.4s var(--ease-out);
+  }
+  .film-thumb:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+  .film-thumb.active {
+    border-color: var(--gold);
+  }
+  .film-thumb.active::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(201, 169, 97, 0.15);
+    z-index: 2;
+    pointer-events: none;
+  }
+  .film-thumb.active::after {
+    content: 'Playing';
+    position: absolute;
+    top: 10px; left: 10px;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--gold);
+    padding: 4px 8px;
+    z-index: 3;
+  }
+  .film-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s var(--ease-out), filter 0.4s;
+    filter: brightness(0.85);
+  }
+  .film-thumb:hover img { transform: scale(1.06); filter: brightness(1); }
+  .film-thumb-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(10,10,10,0.92) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+  .film-thumb-info {
+    position: absolute;
+    left: 14px; right: 14px; bottom: 14px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .film-thumb-num {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .film-thumb-title {
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    line-height: 1.25;
+    color: var(--bone);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .film-thumb-play {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0.85);
+    width: 50px; height: 50px;
+    border: 1px solid var(--bone);
+    border-radius: 50%;
+    background: rgba(10, 10, 10, 0.5);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    opacity: 0;
+    transition: all 0.4s var(--ease-out);
+  }
+  .film-thumb:hover .film-thumb-play {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--ink);
+  }
+  .film-thumb-play svg { width: 18px; height: 18px; margin-left: 2px; }
+
+  .film-thumbs-error {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 0.9rem;
+    color: rgba(245, 240, 232, 0.5);
+  }
+  .film-thumbs-error a {
+    color: var(--gold);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  @media (max-width: 600px) {
+    .film-thumbs-grid { grid-template-columns: 1fr; }
+  }
+
+  /* AI TOOLS */
+  .ai-tools { background: var(--ink); }
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .tool-card {
+    background: var(--ink);
+    padding: 36px 32px;
+    text-decoration: none;
+    color: var(--bone);
+    transition: background 0.5s;
+    position: relative;
+    overflow: hidden;
+    cursor: none;
+    display: block;
+  }
+  .tool-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(201, 169, 97, 0.08), transparent);
+    transition: left 0.8s var(--ease-out);
+  }
+  .tool-card:hover { background: var(--ink-2); }
+  .tool-card:hover::before { left: 100%; }
+  .tool-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+  }
+  .tool-cat {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .tool-arrow {
+    width: 32px; height: 32px;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s var(--ease-out);
+  }
+  .tool-arrow svg { width: 12px; height: 12px; transition: transform 0.4s var(--ease-out); }
+  .tool-card:hover .tool-arrow {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--ink);
+    transform: rotate(-45deg);
+  }
+  .tool-name {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+  }
+  .tool-desc {
+    font-size: 0.85rem;
+    color: rgba(245, 240, 232, 0.55);
+    line-height: 1.5;
+  }
+
+  /* SOCIAL */
+  .social { background: var(--ink-2); border-top: 1px solid var(--line); }
+  .social-list { display: flex; flex-direction: column; list-style: none; }
+  .social-item { border-bottom: 1px solid var(--line); overflow: hidden; }
+  .social-item:first-child { border-top: 1px solid var(--line); }
+  .social-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px 0;
+    text-decoration: none;
+    color: var(--bone);
+    position: relative;
+    transition: padding 0.5s var(--ease-out);
+  }
+  .social-link::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: var(--gold);
+    z-index: 0;
+    transition: left 0.6s var(--ease-out);
+  }
+  .social-link:hover { padding-left: 32px; padding-right: 32px; color: var(--ink); }
+  .social-link:hover::before { left: 0; }
+  .social-name {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 4.5vw, 3.5rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    transition: transform 0.5s var(--ease-out);
+  }
+  .social-link:hover .social-name { transform: translateX(20px); }
+  .social-handle {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: rgba(245, 240, 232, 0.5);
+    letter-spacing: 0.1em;
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s;
+  }
+  .social-link:hover .social-handle { color: var(--ink); }
+  .social-icon { width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; }
+  .social-icon svg { width: 26px; height: 26px; }
+  @media (max-width: 600px) {
+    .social-handle { display: none; }
+  }
+
+  /* RETURN HOME — bottom dramatic block */
+  .return-home {
+    padding: 100px 48px;
+    background: var(--ink);
+    border-top: 1px solid var(--line);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .return-home::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(201, 169, 97, 0.04), transparent 60%);
+  }
+  .return-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .return-title {
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .return-title em { font-style: italic; color: var(--gold); }
+  .return-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 18px;
+    padding: 20px 36px;
+    background: transparent;
+    color: var(--bone);
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    border: 1px solid var(--bone);
+    cursor: none;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.5s ease;
+  }
+  .return-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--bone);
+    transform: translateY(101%);
+    transition: transform 0.5s var(--ease-out);
+    z-index: 0;
+  }
+  .return-cta:hover::before { transform: translateY(0); }
+  .return-cta:hover { color: var(--ink); border-color: var(--bone); }
+  .return-cta span { position: relative; z-index: 1; }
+  .return-cta .arrow { transition: transform 0.4s var(--ease-out); }
+  .return-cta:hover .arrow { transform: translateX(-8px); }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    padding: 60px 48px 32px;
+    border-top: 1px solid var(--line);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 60px;
+  }
+  @media (max-width: 768px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+    footer, .return-home { padding-left: 20px; padding-right: 20px; }
+  }
+  .footer-mark {
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 16px;
+  }
+  .footer-mark em { font-style: italic; color: var(--gold); }
+  .footer-tagline { font-size: 0.95rem; color: rgba(245, 240, 232, 0.55); max-width: 400px; }
+  .footer-col h5 {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a {
+    color: rgba(245, 240, 232, 0.7);
+    text-decoration: none;
+    font-size: 0.92rem;
+    transition: color 0.3s;
+  }
+  .footer-col a:hover { color: var(--gold); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: rgba(245, 240, 232, 0.4);
+    text-transform: uppercase;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  /* reveal */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 1s var(--ease-out), transform 1s var(--ease-out); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  .reveal.delay-1 { transition-delay: 0.1s; }
+  .reveal.delay-2 { transition-delay: 0.2s; }
+  audio { display: none; }
+
+  /* ============================================
+     SOUND TOGGLE BUTTON
+     ============================================ */
+  .sound-toggle {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 200;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px 10px 12px;
+    background: rgba(20, 20, 20, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--line-strong);
+    border-radius: 100px;
+    color: var(--bone);
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    cursor: none;
+    transition: all 0.4s var(--ease-out);
+  }
+  .sound-toggle:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateY(-2px);
+  }
+  .sound-toggle-inner {
+    width: 18px; height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .sound-toggle svg { width: 18px; height: 18px; position: absolute; transition: opacity 0.3s, transform 0.3s; }
+  .sound-toggle .icon-sound-off { opacity: 0; transform: scale(0.8); }
+  .sound-toggle.muted .icon-sound-on { opacity: 0; transform: scale(0.8); }
+  .sound-toggle.muted .icon-sound-off { opacity: 1; transform: scale(1); }
+  .sound-toggle.muted { color: rgba(245, 240, 232, 0.4); }
+  .sound-toggle:not(.muted) .sound-toggle-inner::after {
+    content: '';
+    position: absolute;
+    width: 26px; height: 26px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    opacity: 0;
+    animation: soundPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes soundPulse {
+    0%, 100% { transform: scale(0.6); opacity: 0; }
+    50% { transform: scale(1); opacity: 0.6; }
+  }
+  @media (max-width: 600px) {
+    .sound-toggle { bottom: 16px; right: 16px; padding: 8px 12px 8px 10px; }
+    .sound-toggle-label { display: none; }
+  }
+
+  /* ============================================
+     PHOTO CUSTOMIZER
+     ============================================ */
+  .photo-edit-btn {
+    position: fixed;
+    bottom: 28px;
+    left: 28px;
+    z-index: 200;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px 10px 12px;
+    background: rgba(20, 20, 20, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--line-strong);
+    border-radius: 100px;
+    color: var(--bone);
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    cursor: none;
+    transition: all 0.4s var(--ease-out);
+  }
+  .photo-edit-btn:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateY(-2px);
+  }
+  .photo-edit-btn svg { width: 16px; height: 16px; }
+
+  .photo-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 9500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s, visibility 0.4s;
+  }
+  .photo-modal.open { opacity: 1; visibility: visible; }
+  .photo-modal-panel {
+    background: var(--ink-2);
+    border: 1px solid var(--line-strong);
+    width: 100%;
+    max-width: 540px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 44px;
+    position: relative;
+    transform: scale(0.94) translateY(20px);
+    transition: transform 0.5s var(--ease-out);
+  }
+  .photo-modal.open .photo-modal-panel { transform: scale(1) translateY(0); }
+  .photo-modal-panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .photo-modal-close {
+    position: absolute;
+    top: 20px; right: 20px;
+    width: 32px; height: 32px;
+    background: none;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    color: var(--bone);
+    cursor: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s var(--ease-out);
+  }
+  .photo-modal-close:hover { border-color: var(--gold); color: var(--gold); transform: rotate(90deg); }
+  .photo-modal-close svg { width: 14px; height: 14px; }
+
+  .photo-modal-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .photo-modal-title {
+    font-family: var(--serif);
+    font-size: 2.2rem;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 12px;
+  }
+  .photo-modal-title em { font-style: italic; color: var(--gold); }
+  .photo-modal-desc {
+    font-size: 0.9rem;
+    color: rgba(245, 240, 232, 0.6);
+    line-height: 1.5;
+    margin-bottom: 28px;
+  }
+
+  .photo-dropzone {
+    border: 1.5px dashed var(--line-strong);
+    padding: 36px 24px;
+    text-align: center;
+    cursor: none;
+    transition: all 0.4s var(--ease-out);
+    margin-bottom: 20px;
+  }
+  .photo-dropzone:hover, .photo-dropzone.dragover {
+    border-color: var(--gold);
+    background: rgba(201, 169, 97, 0.04);
+  }
+  .photo-dropzone-icon {
+    width: 32px; height: 32px;
+    color: var(--gold);
+    margin: 0 auto 14px;
+    display: block;
+  }
+  .photo-dropzone-text {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    color: var(--bone);
+    margin-bottom: 6px;
+  }
+  .photo-dropzone-text span {
+    color: var(--gold);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .photo-dropzone-hint {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.4);
+  }
+
+  .photo-preview-wrap { margin-bottom: 24px; }
+  .photo-preview {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--ink) center / cover no-repeat;
+    border: 1px solid var(--line);
+    margin-bottom: 16px;
+    position: relative;
+    isolation: isolate;
+  }
+  .photo-preview.checkered::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: #1a1a1a;
+    background-image:
+      linear-gradient(45deg, rgba(255,255,255,0.04) 25%, transparent 25%),
+      linear-gradient(-45deg, rgba(255,255,255,0.04) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.04) 75%),
+      linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.04) 75%);
+    background-size: 16px 16px;
+    background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+    z-index: -1;
+  }
+  .photo-preview.checkered { background-color: transparent !important; }
+  .photo-position-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .photo-position-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.5);
+    white-space: nowrap;
+  }
+  #photoPositionSlider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 2px;
+    background: var(--line);
+    outline: none;
+    cursor: none;
+  }
+  #photoPositionSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px; height: 14px;
+    background: var(--gold);
+    border-radius: 50%;
+    cursor: none;
+  }
+  #photoPositionSlider::-moz-range-thumb {
+    width: 14px; height: 14px;
+    background: var(--gold);
+    border-radius: 50%;
+    border: none;
+    cursor: none;
+  }
+
+  .photo-modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  /* BG toggle */
+  .bg-toggle-wrap { margin-bottom: 22px; }
+  .bg-toggle-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.5);
+    margin-bottom: 10px;
+  }
+  .bg-toggle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .bg-toggle-opt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px;
+    background: transparent;
+    border: 1px solid var(--line-strong);
+    color: rgba(245, 240, 232, 0.6);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: none;
+    transition: all 0.4s var(--ease-out);
+  }
+  .bg-toggle-opt svg { width: 18px; height: 18px; }
+  .bg-toggle-opt:hover { color: var(--bone); border-color: var(--bone); }
+  .bg-toggle-opt.active {
+    background: rgba(201, 169, 97, 0.1);
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  .bg-toggle-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    color: rgba(245, 240, 232, 0.4);
+    line-height: 1.4;
+    padding-top: 4px;
+  }
+  .bg-toggle-note svg { flex-shrink: 0; margin-top: 2px; color: var(--gold); }
+
+  /* Processing overlay */
+  .bg-processing {
+    background: rgba(10, 10, 10, 0.7);
+    border: 1px solid var(--line);
+    padding: 40px 24px;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .bg-processing-spinner {
+    width: 32px; height: 32px;
+    margin: 0 auto 18px;
+    border: 2px solid var(--line);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .bg-processing-label {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--bone);
+    margin-bottom: 6px;
+  }
+  .bg-processing-hint {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.4);
+  }
+  .photo-btn {
+    flex: 1;
+    padding: 14px 20px;
+    border: none;
+    cursor: none;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    transition: all 0.4s var(--ease-out);
+    position: relative;
+    overflow: hidden;
+  }
+  .photo-btn-secondary {
+    background: transparent;
+    color: var(--bone);
+    border: 1px solid var(--line-strong);
+  }
+  .photo-btn-secondary:hover {
+    border-color: var(--bone);
+    background: rgba(245, 240, 232, 0.05);
+  }
+  .photo-btn-primary {
+    background: var(--bone);
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .photo-btn-primary:hover:not(:disabled) {
+    background: var(--gold);
+  }
+  .photo-btn-primary:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .photo-toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--ink);
+    color: var(--bone);
+    padding: 14px 24px;
+    border: 1px solid var(--gold);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    z-index: 9600;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.4s var(--ease-out);
+    pointer-events: none;
+  }
+  .photo-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .photo-toast.error {
+    border-color: var(--rust, #b54e2c);
+    color: #ffb89e;
+  }
+
+  @media (max-width: 600px) {
+    .photo-edit-btn { bottom: 16px; left: 16px; padding: 8px 12px 8px 10px; }
+    .photo-edit-label { display: none; }
+    .photo-modal-panel { padding: 32px 22px; }
+    .photo-modal-title { font-size: 1.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE ENTER -->
+<div class="page-enter" id="pageEnter"></div>
+
+<!-- CURSOR -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="back-link" id="backLink" data-hover>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span>Home</span>
+    </a>
+    <a href="index.html" class="nav-mark" data-hover>Sama Kane</a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#music" data-hover>Music</a></li>
+    <li><a href="#videos" data-hover>Videos</a></li>
+    <li><a href="#films" data-hover>Films</a></li>
+    <li><a href="#gallery" data-hover>Gallery</a></li>
+    <li><a href="#social" data-hover>Connect</a></li>
+    <li><a href="#ai-tools" data-hover>Atelier</a></li>
+  </ul>
+</nav>
+
+<!-- UNIVERSE HERO -->
+<section class="universe-hero">
+  <div class="uh-bg-text">Universe</div>
+  <div class="uh-portrait"><img src="portrait-hero-nobg.jpg" alt="Sama Kane" /></div>
+  <div class="uh-content">
+    <div class="uh-eyebrow">Welcome inside</div>
+    <h1 class="uh-title">The <em>Universe</em></h1>
+    <div class="uh-meta">
+      <span>Sound</span>
+      <span>Vision</span>
+      <span>Frames</span>
+      <span>Atelier</span>
+      <span>Connect</span>
+    </div>
+  </div>
+</section>
+
+<!-- MUSIC -->
+<section class="content music" id="music">
+  <div class="section-header reveal">
+    <div>
+      <span class="section-num">01 — Sound</span>
+      <h2 class="section-title">The <em>Sonic</em> Library</h2>
+    </div>
+    <p class="section-desc">A handpicked rotation of originals and the records that shape my days. Press play, drift in.</p>
+  </div>
+  <div class="player-wrap reveal delay-1">
+    <!-- Custom player (for Curated / Ambient) -->
+    <div class="player paused" id="player">
+      <div class="now-playing-label">
+        <span class="equalizer"><span></span><span></span><span></span><span></span></span>
+        Now Playing
+      </div>
+      <h3 class="track-title" id="trackTitle">Select a track</h3>
+      <p class="track-artist" id="trackArtist">From the playlist</p>
+      <div class="visualizer" id="visualizer"></div>
+      <div class="progress-row">
+        <span id="currentTime">0:00</span>
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <span id="duration">0:00</span>
+      </div>
+      <div class="controls">
+        <button class="ctrl-btn" id="prevBtn" data-hover aria-label="Previous">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+        </button>
+        <button class="ctrl-btn play" id="playBtn" data-hover aria-label="Play">
+          <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button class="ctrl-btn" id="nextBtn" data-hover aria-label="Next">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+        </button>
+      </div>
+      <div class="volume-row">
+        <span>Vol</span>
+        <div class="volume-bar" id="volumeBar">
+          <div class="volume-fill" id="volumeFill"></div>
+        </div>
+      </div>
+      <audio id="audio"></audio>
+    </div>
+
+    <!-- Spotify artist embed (for Originals — shown by default) -->
+    <div class="spotify-player" id="spotifyPlayer">
+      <div class="spotify-header">
+        <div class="now-playing-label">
+          <span class="equalizer"><span></span><span></span><span></span><span></span></span>
+          The Originals · Live on Spotify
+        </div>
+        <a href="https://open.spotify.com/playlist/567mj3AHu4dUbfBHheAxpc" target="_blank" rel="noopener" class="spotify-open-link" data-hover>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.6 14.4c-.2.3-.6.4-.9.2-2.5-1.5-5.6-1.9-9.3-1-.4.1-.7-.1-.8-.5-.1-.4.1-.7.5-.8 4-.9 7.5-.5 10.3 1.2.3.2.4.6.2.9zm1.2-2.7c-.2.4-.7.5-1.1.3-2.8-1.7-7.1-2.2-10.5-1.2-.4.1-.9-.1-1-.5-.1-.4.1-.9.5-1 3.9-1.2 8.6-.6 11.8 1.4.4.2.5.7.3 1zm.1-2.8C14.5 9 8.7 8.8 5.5 9.8c-.5.2-1.1-.1-1.2-.6-.2-.5.1-1.1.6-1.2 3.7-1.1 10.1-.9 13.8 1.3.5.3.6.9.4 1.4-.3.4-1 .6-1.4.3z"/></svg>
+          <span>Open in Spotify</span>
+        </a>
+      </div>
+      <iframe
+        id="spotifyFrame"
+        src="https://open.spotify.com/embed/playlist/567mj3AHu4dUbfBHheAxpc?utm_source=generator&theme=0"
+        width="100%"
+        height="500"
+        frameborder="0"
+        allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy">
+      </iframe>
+      <div class="spotify-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="14" height="14"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16v.01" stroke-linecap="round"/></svg>
+        <span>Plays 30-second previews of every track. For full songs, open the playlist on Spotify.</span>
+      </div>
+    </div>
+
+    <div class="playlist">
+      <div class="playlist-tabs">
+        <button class="playlist-tab active" data-pl="originals" data-hover>Originals</button>
+      </div>
+      <ul class="track-list" id="trackList"></ul>
+      <!-- Originals tab content -->
+      <div class="originals-side" id="originalsSide">
+        <div class="originals-side-eyebrow">— Also available on —</div>
+        <div class="originals-platforms">
+          <a href="https://music.apple.com/us/artist/foreverroyalsama/1816079246" target="_blank" rel="noopener" class="originals-platform" data-hover>Apple Music →</a>
+          <a href="https://music.youtube.com/channel/UCTO5Yis7vTt21lRsuTVCTKg" target="_blank" rel="noopener" class="originals-platform" data-hover>YouTube Music →</a>
+          <a href="https://music.amazon.com/artists/B0F9NDHBVB/foreverroyalsama" target="_blank" rel="noopener" class="originals-platform" data-hover>Amazon Music →</a>
+          <a href="https://tidal.com/artist/60492648" target="_blank" rel="noopener" class="originals-platform" data-hover>Tidal →</a>
+          <a href="https://suno.com/@foreverroyalsama" target="_blank" rel="noopener" class="originals-platform" data-hover>Suno (Creation) →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Streaming platforms -->
+  <div class="platforms-section reveal delay-2">
+    <div class="platforms-header">
+      <span class="platforms-eyebrow">— Stream the Originals —</span>
+      <h3 class="platforms-title">Available on every <em>platform</em></h3>
+    </div>
+    <div class="platforms-grid" id="platformsGrid"></div>
+  </div>
+</section>
+
+<!-- VIDEOS (User-uploaded MP4s) -->
+<section class="content videos" id="videos">
+  <div class="section-header reveal">
+    <div>
+      <span class="section-num">02 — Vision</span>
+      <h2 class="section-title">Moving <em>Pictures</em></h2>
+    </div>
+    <p class="section-desc">My own films and clips. Upload, play, share.</p>
+  </div>
+
+  <!-- Uploader -->
+  <div class="media-uploader reveal" id="videoUploader">
+    <input type="file" id="videoFileInput" accept="video/*" multiple hidden />
+    <div class="media-uploader-inner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="media-uploader-icon">
+        <rect x="3" y="6" width="14" height="12" rx="1"/>
+        <path d="M21 8.5L17 11v2l4 2.5V8.5z"/>
+      </svg>
+      <div class="media-uploader-text">Drop video files or <span>browse</span></div>
+      <div class="media-uploader-hint">MP4, MOV, WEBM · up to 200MB each</div>
+    </div>
+  </div>
+
+  <div class="upload-grid" id="uploadedVideoGrid"></div>
+  <div class="empty-state" id="videoEmpty">
+    <span>No videos yet — upload your first clip above.</span>
+  </div>
+</section>
+
+<!-- FILMS (YouTube playlist player) -->
+<section class="content films" id="films">
+  <div class="section-header reveal">
+    <div>
+      <span class="section-num">03 — Films</span>
+      <h2 class="section-title">Sama <em>Diaries</em></h2>
+    </div>
+    <p class="section-desc">My YouTube playlist — Spark It Up & more. Click any thumbnail to play in place.</p>
+  </div>
+
+  <!-- Featured player -->
+  <div class="film-player-wrap reveal delay-1">
+    <div class="film-player">
+      <div id="filmPlayerStage"></div>
+    </div>
+    <div class="film-player-meta">
+      <div>
+        <div class="film-player-eyebrow">
+          <span class="film-eq"><span></span><span></span><span></span><span></span></span>
+          Now Playing
+        </div>
+        <div class="film-player-title" id="filmTitle">Loading playlist…</div>
+      </div>
+      <a href="https://www.youtube.com/playlist?list=PL2rRflAnjIgljv4ljbWkr4qzLIdPRPsBQ" target="_blank" rel="noopener" class="film-player-link" data-hover>
+        <span>Full playlist</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17L17 7M9 7h8v8"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Thumbnails grid -->
+  <div class="film-thumbs-header reveal delay-2">
+    <span class="film-thumbs-label">All Episodes</span>
+    <span class="film-thumbs-count" id="filmThumbsCount">Loading…</span>
+  </div>
+  <div class="film-thumbs-grid" id="filmThumbsGrid">
+    <div class="film-thumbs-loading">
+      <div class="bg-processing-spinner"></div>
+      <span>Connecting to YouTube…</span>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY (User uploads) -->
+<section class="content gallery" id="gallery">
+  <div class="section-header reveal">
+    <div>
+      <span class="section-num">04 — Frames</span>
+      <h2 class="section-title">The <em>Photo</em> Archive</h2>
+    </div>
+    <p class="section-desc">Upload your photos to build the archive. Drag-drop multiple files at once.</p>
+  </div>
+
+  <!-- Uploader -->
+  <div class="media-uploader reveal" id="photoUploader">
+    <input type="file" id="photoUploaderInput" accept="image/*" multiple hidden />
+    <div class="media-uploader-inner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="media-uploader-icon">
+        <rect x="3" y="3" width="18" height="18" rx="1"/>
+        <circle cx="9" cy="9" r="2"/>
+        <path d="M3 17l5-5 4 4 3-3 6 6" stroke-linejoin="round"/>
+      </svg>
+      <div class="media-uploader-text">Drop photos here or <span>browse</span></div>
+      <div class="media-uploader-hint">JPG, PNG, WEBP · up to 20MB each · multiple at once</div>
+    </div>
+  </div>
+
+  <div class="gallery-grid" id="galleryGrid"></div>
+  <div class="empty-state" id="galleryEmpty">
+    <span>No photos yet — upload your first images above.</span>
+  </div>
+</section>
+
+<!-- SOCIAL -->
+<section class="content social" id="social">
+  <div class="section-header reveal">
+    <div>
+      <span class="section-num">05 — Connect</span>
+      <h2 class="section-title">Find Me <em>Elsewhere</em></h2>
+    </div>
+    <p class="section-desc">Follow the trail. New work, behind-the-scenes, and conversations.</p>
+  </div>
+  <ul class="social-list reveal delay-1" id="socialList"></ul>
+</section>
+
+<!-- AI TOOLS -->
+<section class="content ai-tools" id="ai-tools">
+  <div class="section-header reveal">
+    <div>
+      <span class="section-num">06 — Atelier</span>
+      <h2 class="section-title">The <em>Creative</em> Stack</h2>
+    </div>
+    <p class="section-desc">Tools I trust for image, sound, and motion. The current rotation.</p>
+  </div>
+  <div class="tools-grid reveal delay-1" id="toolsGrid"></div>
+</section>
+
+<!-- RETURN HOME BLOCK -->
+<section class="return-home">
+  <div class="return-eyebrow">— End of the universe —</div>
+  <h2 class="return-title">Back to the <em>beginning</em></h2>
+  <a href="index.html" class="return-cta" id="returnCta" data-hover>
+    <span class="arrow">←</span>
+    <span>Return Home</span>
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-mark">Sama <em>Kane</em></div>
+      <p class="footer-tagline">A curated universe of sound, vision, and the work in between. Built with intention.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Universe</h5>
+      <ul>
+        <li><a href="#music" data-hover>Music</a></li>
+        <li><a href="#videos" data-hover>Videos</a></li>
+        <li><a href="#films" data-hover>Films</a></li>
+        <li><a href="#gallery" data-hover>Gallery</a></li>
+        <li><a href="#ai-tools" data-hover>Atelier</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <ul>
+        <li><a href="mailto:foreverroyalsama@gmail.com" data-hover>foreverroyalsama@gmail.com</a></li>
+        <li><a href="https://www.youtube.com/@foreversama" target="_blank" rel="noopener" data-hover>YouTube channel</a></li>
+        <li><a href="index.html" data-hover>Home</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 foreverroyalsama · All rights reserved</span>
+    <span>Crafted with care</span>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-content">
+    <button class="lightbox-close" id="lightboxClose" data-hover>
+      <span>Close</span><span>✕</span>
+    </button>
+    <iframe id="lightboxIframe" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
+</div>
+
+<script>
+/* ============================================
+   PAGE ENTER ANIMATION
+   ============================================ */
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('pageEnter').classList.add('done'), 100);
+});
+
+/* ============================================
+   DATA
+   ============================================ */
+const playlists = {
+  // Originals tab is powered by Spotify embed — no MP3s needed
+  originals: []
+};
+
+// Streaming platforms — where to find originals
+const musicPlatforms = [
+  { name: "Suno",          handle: "@foreverroyalsama", url: "https://suno.com/@foreverroyalsama",                              cat: "Creation" },
+  { name: "Spotify",       handle: "foreverroyalsama",  url: "https://open.spotify.com/artist/4C8B8BPPj0SIIEvDDXyktk",          cat: "Streaming" },
+  { name: "Apple Music",   handle: "foreverroyalsama",  url: "https://music.apple.com/us/artist/foreverroyalsama/1816079246",  cat: "Streaming" },
+  { name: "YouTube Music", handle: "foreverroyalsama",  url: "https://music.youtube.com/channel/UCTO5Yis7vTt21lRsuTVCTKg",     cat: "Streaming" },
+  { name: "Amazon Music",  handle: "foreverroyalsama",  url: "https://music.amazon.com/artists/B0F9NDHBVB/foreverroyalsama",   cat: "Streaming" },
+  { name: "Tidal",         handle: "foreverroyalsama",  url: "https://tidal.com/artist/60492648",                              cat: "Streaming" },
+  { name: "Deezer",        handle: "foreverroyalsama",  url: "https://www.deezer.com/search/foreverroyalsama",                 cat: "Streaming" },
+  { name: "Pandora",       handle: "foreverroyalsama",  url: "https://www.pandora.com/artist/foreverroyalsama/ARZ37lqJV39pmxg", cat: "Streaming" },
+  { name: "iHeartRadio",   handle: "foreverroyalsama",  url: "https://www.iheart.com/artist/foreverroyalsama-46905523/",       cat: "Streaming" },
+  { name: "Qobuz",         handle: "foreverroyalsama",  url: "https://www.qobuz.com/us-en/search/albums/foreverroyalsama",     cat: "Streaming" }
+];
+
+// Featured YouTube videos (empty by default — user can add more later if desired)
+const videos = [];
+
+// Empty gallery — populated entirely by user uploads via the gallery uploader
+const gallery = [];
+
+const tools = [
+  { name: "Midjourney", cat: "Image", desc: "The benchmark for cinematic AI imagery and aesthetic direction.", url: "https://midjourney.com" },
+  { name: "Runway", cat: "Video", desc: "Frame-perfect AI video generation. Gen-3 changed the game.", url: "https://runwayml.com" },
+  { name: "Suno", cat: "Music", desc: "Studio-grade music from prompts. My favorite for sketching ideas.", url: "https://suno.com" },
+  { name: "ElevenLabs", cat: "Voice", desc: "Voice cloning and TTS that actually sounds human.", url: "https://elevenlabs.io" },
+  { name: "Higgsfield", cat: "Motion", desc: "Cinematic motion control and character consistency.", url: "https://higgsfield.ai" },
+  { name: "Krea", cat: "Realtime", desc: "Real-time creative canvas. Sketch to image, instantly.", url: "https://krea.ai" },
+  { name: "Flux", cat: "Image", desc: "Open-weight diffusion with incredible prompt adherence.", url: "https://blackforestlabs.ai" },
+  { name: "Pika", cat: "Video", desc: "Playful AI video, perfect for social-first work.", url: "https://pika.art" }
+];
+
+const socials = [
+  { name: "Instagram · Sama", handle: "@foreverroyalsama", url: "https://www.instagram.com/foreverroyalsama/",
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="18" cy="6" r="0.8" fill="currentColor"/></svg>' },
+  { name: "Instagram · Creations", handle: "@foreversama.creations", url: "https://www.instagram.com/foreversama.creations/",
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="18" cy="6" r="0.8" fill="currentColor"/></svg>' },
+  { name: "Instagram · Tunes", handle: "@foreversama.tunes", url: "https://www.instagram.com/foreversama.tunes/",
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="18" cy="6" r="0.8" fill="currentColor"/></svg>' },
+  { name: "YouTube · Sama Diaries", handle: "@foreversama", url: "https://www.youtube.com/@foreversama",
+    icon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.2-1.6-.9-2.3c-.8-.9-1.7-.9-2.1-1C17.1 3.4 12 3.4 12 3.4s-5.1 0-7.9.3c-.4.1-1.3.1-2.1 1C1.3 5.4 1 7 1 7S.8 8.9.8 10.7v1.7C.8 14.2 1 16 1 16s.2 1.6.9 2.3c.8.9 1.9.8 2.4.9 1.7.2 7.7.3 7.7.3s5.1 0 7.9-.3c.4-.1 1.3-.1 2.1-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.7v-1.7c0-1.8-.2-3.5-.2-3.5zM10 14.7V8l6 3.4-6 3.3z"/></svg>' },
+  { name: "Threads", handle: "@foreverroyalsama", url: "https://www.threads.com/@foreverroyalsama",
+    icon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 11.2c-.1 0-.1 0-.2-.1-.1-1.8-.6-3.3-1.5-4.4-1.3-1.5-3.2-2.3-5.6-2.4-2.4 0-4.3.8-5.7 2.3C3.3 7.8 2.5 9.6 2.5 12c0 2.3.8 4.2 2.2 5.5 1.4 1.4 3.3 2.1 5.6 2.1 2.6 0 4.4-1 5.6-1.8 1.4-1 2.3-2.4 2.5-3.8.4-2.5-.8-4.6-3-5.9-.5-.3-1.1-.5-1.7-.7-.3-1.7-1.2-2.6-2.8-2.6-1 0-1.9.4-2.4 1.2-.5.7-.7 1.6-.5 2.5.5 1.9 2 2.7 4.3 2.5.1.5.2 1 .4 1.4.3.7.7 1.3 1.1 1.7-1 .4-2.1.6-3.3.6-1.6 0-2.9-.5-3.8-1.5-1-1.1-1.5-2.7-1.5-4.5 0-1.8.5-3.4 1.5-4.4 1-1.1 2.3-1.7 4-1.7 1.7 0 3 .5 3.9 1.6.7.8 1.1 1.9 1.3 3.3.5.3 1 .6 1.5 1z"/></svg>' },
+  { name: "Facebook · Personal", handle: "Sama", url: "https://www.facebook.com/profile.php?id=61560247356252",
+    icon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.5-4.5-10-10-10S2 6.5 2 12c0 5 3.7 9.1 8.4 9.9V15h-2.5v-3h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 3h-2.3v6.9C18.3 21.1 22 17 22 12z"/></svg>' },
+  { name: "Facebook · Creations", handle: "Sama Digital", url: "https://www.facebook.com/profile.php?id=61560219580027",
+    icon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.5-4.5-10-10-10S2 6.5 2 12c0 5 3.7 9.1 8.4 9.9V15h-2.5v-3h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 3h-2.3v6.9C18.3 21.1 22 17 22 12z"/></svg>' },
+  { name: "X / Twitter", handle: "@forever_r_sama", url: "https://x.com/forever_r_sama",
+    icon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>' },
+  { name: "Email", handle: "foreverroyalsama@gmail.com", url: "mailto:foreverroyalsama@gmail.com",
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>' }
+];
+
+/* ============================================
+   CURSOR
+   ============================================ */
+const dot = document.getElementById('cursorDot');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+});
+function loopRing() {
+  rx += (mx - rx) * 0.18;
+  ry += (my - ry) * 0.18;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(loopRing);
+}
+loopRing();
+document.addEventListener('mouseover', e => {
+  if (e.target.closest('[data-hover]') || e.target.matches('a, button')) ring.classList.add('hover');
+});
+document.addEventListener('mouseout', e => {
+  if (e.target.closest('[data-hover]') || e.target.matches('a, button')) ring.classList.remove('hover');
+});
+
+/* ============================================
+   PAGE EXIT (back to home)
+   ============================================ */
+function exitToHome(e) {
+  e.preventDefault();
+  if (window.SamaSound) window.SamaSound.play('back');
+  document.getElementById('pageEnter').classList.remove('done');
+  setTimeout(() => { window.location.href = 'index.html'; }, 900);
+}
+document.getElementById('backLink').addEventListener('click', exitToHome);
+document.getElementById('returnCta').addEventListener('click', exitToHome);
+
+/* ============================================
+   MUSIC PLAYER
+   ============================================ */
+const audio = document.getElementById('audio');
+const player = document.getElementById('player');
+const playBtn = document.getElementById('playBtn');
+const playIcon = document.getElementById('playIcon');
+const trackTitle = document.getElementById('trackTitle');
+const trackArtist = document.getElementById('trackArtist');
+const trackList = document.getElementById('trackList');
+const progressFill = document.getElementById('progressFill');
+const progressBar = document.getElementById('progressBar');
+const currentTimeEl = document.getElementById('currentTime');
+const durationEl = document.getElementById('duration');
+const volumeBar = document.getElementById('volumeBar');
+const volumeFill = document.getElementById('volumeFill');
+const visualizer = document.getElementById('visualizer');
+
+let currentPlaylist = 'originals';
+let currentTrack = 0;
+
+for (let i = 0; i < 40; i++) {
+  const bar = document.createElement('span');
+  visualizer.appendChild(bar);
+}
+const vizBars = visualizer.querySelectorAll('span');
+
+function animateVisualizer() {
+  if (!audio.paused) {
+    vizBars.forEach((b, i) => {
+      const t = Date.now() * 0.005 + i * 0.3;
+      const h = 20 + Math.abs(Math.sin(t)) * 60 + Math.random() * 20;
+      b.style.height = h + '%';
+    });
+  }
+  requestAnimationFrame(animateVisualizer);
+}
+animateVisualizer();
+
+function renderPlaylist() {
+  const tracks = playlists[currentPlaylist];
+  trackList.innerHTML = tracks.map((t, i) => `
+    <li class="track-item ${i === currentTrack && !audio.paused ? 'playing' : ''}" data-idx="${i}" data-hover>
+      <span class="track-num">${String(i+1).padStart(2,'0')}</span>
+      <div class="track-info">
+        <div class="track-name">${t.title}</div>
+        <div class="track-sub">${t.sub}</div>
+      </div>
+      <span class="track-duration">${t.duration}</span>
+    </li>
+  `).join('');
+  trackList.querySelectorAll('.track-item').forEach(el => {
+    el.addEventListener('click', () => {
+      currentTrack = parseInt(el.dataset.idx);
+      loadTrack();
+      playAudio();
+    });
+  });
+}
+
+function loadTrack() {
+  const t = playlists[currentPlaylist][currentTrack];
+  if (!t) return;
+  trackTitle.textContent = t.title;
+  trackArtist.textContent = t.sub;
+  audio.src = t.src;
+  renderPlaylist();
+}
+
+function playAudio() {
+  audio.play().catch(() => {});
+  player.classList.remove('paused');
+  playIcon.innerHTML = '<path d="M6 4h4v16H6zm8 0h4v16h-4z"/>';
+  renderPlaylist();
+}
+function pauseAudio() {
+  audio.pause();
+  player.classList.add('paused');
+  playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+}
+playBtn.addEventListener('click', () => {
+  if (!audio.src) loadTrack();
+  audio.paused ? playAudio() : pauseAudio();
+});
+document.getElementById('prevBtn').addEventListener('click', () => {
+  const tracks = playlists[currentPlaylist];
+  currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
+  loadTrack(); playAudio();
+});
+document.getElementById('nextBtn').addEventListener('click', () => {
+  const tracks = playlists[currentPlaylist];
+  currentTrack = (currentTrack + 1) % tracks.length;
+  loadTrack(); playAudio();
+});
+
+audio.addEventListener('timeupdate', () => {
+  if (audio.duration) {
+    progressFill.style.width = (audio.currentTime / audio.duration * 100) + '%';
+    currentTimeEl.textContent = formatTime(audio.currentTime);
+    durationEl.textContent = formatTime(audio.duration);
+  }
+});
+audio.addEventListener('ended', () => document.getElementById('nextBtn').click());
+
+progressBar.addEventListener('click', e => {
+  if (!audio.duration) return;
+  const rect = progressBar.getBoundingClientRect();
+  audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+});
+
+audio.volume = 0.7;
+volumeBar.addEventListener('click', e => {
+  const rect = volumeBar.getBoundingClientRect();
+  const v = (e.clientX - rect.left) / rect.width;
+  audio.volume = Math.max(0, Math.min(1, v));
+  volumeFill.style.width = (audio.volume * 100) + '%';
+});
+
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return `${m}:${String(sec).padStart(2,'0')}`;
+}
+
+// Spotify embed toggle helpers
+const playerWrap = document.querySelector('.player-wrap');
+function updatePlayerMode() {
+  if (currentPlaylist === 'originals') {
+    playerWrap.classList.add('show-spotify');
+    // Pause the custom audio so two players don't play at once
+    if (audio && !audio.paused) pauseAudio();
+  } else {
+    playerWrap.classList.remove('show-spotify');
+    // Stop the spotify iframe by reloading its src (pauses playback)
+    const sf = document.getElementById('spotifyFrame');
+    if (sf) {
+      // Only reload if it had been playing (cheap heuristic: check if currentPlaylist just changed)
+      // We do this by setting src to itself, which is a no-op visually but stops audio
+      // Actually safer: only reload when leaving originals, not when entering it
+      // Already handled above — this branch means we're going AWAY from originals
+      const currentSrc = sf.src;
+      sf.src = currentSrc;
+    }
+  }
+}
+
+document.querySelectorAll('.playlist-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.playlist-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const prevPlaylist = currentPlaylist;
+    currentPlaylist = tab.dataset.pl;
+    currentTrack = 0;
+    renderPlaylist();
+    // Toggle Spotify embed visibility
+    if (prevPlaylist !== currentPlaylist) updatePlayerMode();
+  });
+});
+renderPlaylist();
+// Initial mode (Originals is the default active tab)
+updatePlayerMode();
+
+/* ============================================
+   STREAMING PLATFORMS GRID
+   ============================================ */
+const platformsGrid = document.getElementById('platformsGrid');
+platformsGrid.innerHTML = musicPlatforms.map(p => `
+  <a href="${p.url}" target="_blank" rel="noopener" class="platform-card" data-hover>
+    <div class="platform-card-head">
+      <span class="platform-cat">${p.cat}</span>
+      <svg class="platform-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M9 7h8v8"/></svg>
+    </div>
+    <div class="platform-name">${p.name}</div>
+    <div class="platform-handle">${p.handle}</div>
+  </a>
+`).join('');
+
+/* ============================================
+   FILMS — YouTube Data API v3 (Sama Diaries)
+   ============================================
+   Fetches the FULL playlist using YouTube's official API.
+   - Returns all videos (handles pagination, no 15-item cap)
+   - Auto-syncs additions/deletions on every page load
+   - Falls back gracefully if the key is missing or the request fails
+   ============================================ */
+
+// ⬇️  PASTE YOUR YOUTUBE DATA API KEY HERE  ⬇️
+const YT_API_KEY = '';   // example: 'AIzaSyA1B2C3D4_yourKeyHere...'
+
+const FILM_PLAYLIST_ID = 'PL2rRflAnjIgljv4ljbWkr4qzLIdPRPsBQ';
+const FILM_CHANNEL_ID  = 'UCZZA-bN6EEgPDFhRkqJpawg';
+const FILM_FIRST_VIDEO = 'yTiOgPDmnEo';
+
+const filmStageEl     = document.getElementById('filmPlayerStage');
+const filmTitleEl     = document.getElementById('filmTitle');
+const filmThumbsGrid  = document.getElementById('filmThumbsGrid');
+const filmThumbsCount = document.getElementById('filmThumbsCount');
+const filmPlayerWrap  = document.querySelector('.film-player-wrap');
+
+let filmCurrentVideoId = FILM_FIRST_VIDEO;
+
+// ---- Player iframe (single video only — no playlist param) ----
+function setFilmIframe(videoId, autoplay) {
+  filmCurrentVideoId = videoId;
+  const url = autoplay
+    ? `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`
+    : `https://www.youtube.com/embed/${videoId}?rel=0`;
+  filmStageEl.innerHTML = `
+    <iframe
+      src="${url}"
+      title="Sama Diaries"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen
+      style="width:100%;height:100%;border:0;display:block;"></iframe>
+  `;
+}
+setFilmIframe(FILM_FIRST_VIDEO, false);
+
+function playFilm(videoId, title) {
+  setFilmIframe(videoId, true);
+  if (title) filmTitleEl.textContent = title;
+  filmThumbsGrid.querySelectorAll('.film-thumb').forEach(t => {
+    t.classList.toggle('active', t.dataset.vid === videoId);
+  });
+  document.querySelector('.film-player').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  if (window.SamaSound) window.SamaSound.play('video');
+}
+
+function escapeHTML(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// ---- YouTube Data API fetch with pagination ----
+async function fetchAllPlaylistItems() {
+  if (!YT_API_KEY) return null;
+
+  const allItems = [];
+  let pageToken = '';
+  const MAX_PAGES = 10; // safety cap = up to 500 videos
+
+  for (let page = 0; page < MAX_PAGES; page++) {
+    const params = new URLSearchParams({
+      part: 'snippet,contentDetails',
+      playlistId: FILM_PLAYLIST_ID,
+      maxResults: '50',
+      key: YT_API_KEY,
+    });
+    if (pageToken) params.set('pageToken', pageToken);
+
+    const url = `https://www.googleapis.com/youtube/v3/playlistItems?${params}`;
+    try {
+      const res = await fetch(url);
+      if (!res.ok) {
+        const errBody = await res.json().catch(() => null);
+        console.warn('YouTube API error:', res.status, errBody);
+        throw new Error(`HTTP ${res.status}: ${errBody?.error?.message || 'unknown error'}`);
+      }
+      const data = await res.json();
+      if (data.items) {
+        data.items.forEach(it => {
+          // Skip private/deleted videos (resourceId.videoId will exist but title says "Private video")
+          const vid = it.contentDetails?.videoId || it.snippet?.resourceId?.videoId;
+          const title = it.snippet?.title;
+          if (!vid || !title) return;
+          if (title === 'Private video' || title === 'Deleted video') return;
+          allItems.push({ id: vid, title });
+        });
+      }
+      pageToken = data.nextPageToken || '';
+      if (!pageToken) break;
+    } catch (err) {
+      console.error('Playlist fetch failed on page', page, err);
+      if (allItems.length === 0) throw err; // bubble up only if we got nothing
+      break;
+    }
+  }
+
+  return allItems.length ? allItems : null;
+}
+
+// ---- Fallback: try RSS feeds (limited to 15 items but better than nothing) ----
+function parseRSS(xmlText) {
+  try {
+    const doc = new DOMParser().parseFromString(xmlText, 'text/xml');
+    if (doc.querySelector('parsererror')) return null;
+    const entries = doc.getElementsByTagName('entry');
+    const out = [];
+    for (let i = 0; i < entries.length; i++) {
+      const e = entries[i];
+      let vidEl = e.getElementsByTagName('yt:videoId')[0];
+      if (!vidEl) {
+        const all = e.getElementsByTagName('*');
+        for (let j = 0; j < all.length; j++) {
+          if (all[j].localName === 'videoId') { vidEl = all[j]; break; }
+        }
+      }
+      const titleEl = e.getElementsByTagName('title')[0];
+      if (vidEl && titleEl) out.push({ id: vidEl.textContent.trim(), title: titleEl.textContent.trim() });
+    }
+    return out.length ? out : null;
+  } catch { return null; }
+}
+
+async function fetchRSSFallback() {
+  const proxies = [
+    url => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+    url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+    url => `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(url)}`,
+  ];
+  const feeds = [
+    `https://www.youtube.com/feeds/videos.xml?playlist_id=${FILM_PLAYLIST_ID}`,
+    `https://www.youtube.com/feeds/videos.xml?channel_id=${FILM_CHANNEL_ID}`,
+  ];
+  for (const feed of feeds) {
+    for (const wrap of proxies) {
+      try {
+        const ctl = new AbortController();
+        const t = setTimeout(() => ctl.abort(), 8000);
+        const res = await fetch(wrap(feed), { signal: ctl.signal });
+        clearTimeout(t);
+        if (!res.ok) continue;
+        const text = await res.text();
+        const items = parseRSS(text);
+        if (items && items.length) return items;
+      } catch { continue; }
+    }
+  }
+  return null;
+}
+
+// ---- Render thumbnails ----
+function renderFilmThumbs(videos, partial) {
+  if (!videos || !videos.length) {
+    filmThumbsCount.textContent = '—';
+    filmThumbsGrid.innerHTML = `
+      <div class="film-thumbs-error">
+        Couldn't load videos. ${YT_API_KEY ? 'Check API key restrictions or quota.' : 'Add a YouTube Data API key to the file to enable full playlist.'}<br/>
+        <a href="https://www.youtube.com/playlist?list=${FILM_PLAYLIST_ID}" target="_blank" rel="noopener">Open the playlist on YouTube →</a>
+      </div>
+    `;
+    return;
+  }
+  const countLabel = partial
+    ? `${videos.length} video${videos.length === 1 ? '' : 's'} (latest only — add API key for full playlist)`
+    : `${videos.length} video${videos.length === 1 ? '' : 's'}`;
+  filmThumbsCount.textContent = countLabel;
+  filmThumbsGrid.innerHTML = videos.map((v, i) => `
+    <div class="film-thumb ${v.id === filmCurrentVideoId ? 'active' : ''}" data-vid="${v.id}" data-title="${escapeHTML(v.title)}" data-hover>
+      <img src="https://i.ytimg.com/vi/${v.id}/mqdefault.jpg" alt="${escapeHTML(v.title)}" loading="lazy"
+           onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${v.id}/hqdefault.jpg';" />
+      <div class="film-thumb-overlay"></div>
+      <div class="film-thumb-play">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+      <div class="film-thumb-info">
+        <div class="film-thumb-num">Ep ${String(i+1).padStart(2,'0')}</div>
+        <div class="film-thumb-title">${escapeHTML(v.title)}</div>
+      </div>
+    </div>
+  `).join('');
+  filmThumbsGrid.querySelectorAll('.film-thumb').forEach(el => {
+    el.addEventListener('click', () => playFilm(el.dataset.vid, el.dataset.title));
+  });
+
+  // If our default video isn't in the loaded list, switch to the first one in the playlist
+  const current = videos.find(v => v.id === filmCurrentVideoId) || videos[0];
+  if (current) {
+    filmTitleEl.textContent = current.title;
+    if (!videos.find(v => v.id === filmCurrentVideoId)) {
+      filmCurrentVideoId = current.id;
+      setFilmIframe(current.id, false);
+    }
+  }
+}
+
+// ---- Init ----
+(async function initFilms() {
+  // Try official API first
+  if (YT_API_KEY) {
+    try {
+      const videos = await fetchAllPlaylistItems();
+      if (videos && videos.length) {
+        renderFilmThumbs(videos, false);
+        return;
+      }
+    } catch (err) {
+      console.warn('API fetch failed, falling back to RSS:', err.message);
+    }
+  }
+
+  // Fallback to RSS (15-item cap)
+  const rssVideos = await fetchRSSFallback();
+  if (rssVideos && rssVideos.length) {
+    renderFilmThumbs(rssVideos, !YT_API_KEY); // mark as partial if no API key
+    return;
+  }
+
+  // Last resort
+  renderFilmThumbs([{ id: FILM_FIRST_VIDEO, title: 'Spark It Up — Sama Kane' }], true);
+})();
+
+/* ============================================
+   UPLOADED VIDEOS (manifest + admin uploads)
+   ============================================
+   Visitors see videos from videos-manifest.json.
+   Admin (you) can ALSO upload locally for staging.
+   ============================================ */
+const uploadedVideoGrid = document.getElementById('uploadedVideoGrid');
+const videoEmpty = document.getElementById('videoEmpty');
+const videoUploader = document.getElementById('videoUploader');
+const videoFileInput = document.getElementById('videoFileInput');
+
+const liveVideoUrls = new Set();
+function revokeVideoUrls() {
+  liveVideoUrls.forEach(u => URL.revokeObjectURL(u));
+  liveVideoUrls.clear();
+}
+
+let manifestVideos = [];
+
+async function loadManifestVideos() {
+  try {
+    const r = await fetch('videos-manifest.json', { cache: 'no-cache' });
+    if (!r.ok) return [];
+    const data = await r.json();
+    return (data.videos || []).map(v => ({
+      id: 'mf_' + v.file,
+      name: v.title || v.file.replace(/\.[^.]+$/, ''),
+      url: 'videos/' + v.file,
+      poster: v.poster ? 'videos/' + v.poster : null,
+      width: v.width || 1920,
+      height: v.height || 1080,
+      duration: v.duration || 0,
+      isManifest: true
+    }));
+  } catch (err) {
+    return [];
+  }
+}
+
+async function renderVideos() {
+  revokeVideoUrls();
+  manifestVideos = await loadManifestVideos();
+
+  let localVideos = [];
+  if (window.__SAMA_ADMIN__) {
+    const items = await SamaMedia.getVideos();
+    localVideos = items.map(item => {
+      const thumbURL = SamaMedia.blobToURL(item.thumb);
+      liveVideoUrls.add(thumbURL);
+      return {
+        id: item.id,
+        name: item.name,
+        url: null, // load on demand
+        thumbURL,
+        width: item.width,
+        height: item.height,
+        duration: item.duration,
+        item,
+        isManifest: false
+      };
+    });
+  }
+
+  const allVideos = [...manifestVideos, ...localVideos];
+
+  if (!allVideos.length) {
+    uploadedVideoGrid.innerHTML = '';
+    videoEmpty.hidden = false;
+    return;
+  }
+  videoEmpty.hidden = true;
+
+  uploadedVideoGrid.innerHTML = allVideos.map(v => {
+    const ratio = v.width && v.height ? (v.width / v.height) : (16/9);
+    const isPortrait = ratio < 1;
+    const aspectStyle = `aspect-ratio: ${v.width || 16} / ${v.height || 9};`;
+    // For manifest videos, generate the poster URL or fall back to first-frame attempt
+    const thumbSrc = v.isManifest
+      ? (v.poster || v.url) // if no poster, browsers will show first frame from <video poster>
+      : v.thumbURL;
+    return `
+      <div class="uploaded-video ${isPortrait ? 'portrait' : ''}" data-id="${v.id}" data-hover style="${aspectStyle}">
+        ${v.isManifest && !v.poster
+          ? `<video class="thumb" src="${v.url}" preload="metadata" muted playsinline></video>`
+          : `<img class="thumb" src="${thumbSrc}" alt="${v.name}" />`
+        }
+        <div class="uploaded-video-play">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="uploaded-video-info">
+          <div class="uploaded-video-name">${v.name}</div>
+          <div class="uploaded-video-meta">${v.duration ? SamaMedia.formatDuration(v.duration) + ' · ' : ''}${v.width}×${v.height}</div>
+        </div>
+        ${!v.isManifest && window.__SAMA_ADMIN__ ? `
+          <button class="media-delete" data-delete-video="${v.id}" data-hover aria-label="Delete">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+        ` : ''}
+      </div>
+    `;
+  }).join('');
+
+  uploadedVideoGrid.querySelectorAll('.uploaded-video').forEach(card => {
+    card.addEventListener('click', async e => {
+      if (e.target.closest('[data-delete-video]')) return;
+      if (card.classList.contains('playing')) return;
+      const id = card.dataset.id;
+      const v = allVideos.find(x => x.id === id);
+      if (!v) return;
+      let videoURL;
+      if (v.isManifest) {
+        videoURL = v.url;
+      } else {
+        videoURL = SamaMedia.blobToURL(v.item.full);
+        liveVideoUrls.add(videoURL);
+      }
+      card.classList.add('playing');
+      const thumb = card.querySelector('.thumb');
+      const video = document.createElement('video');
+      video.src = videoURL;
+      video.controls = true;
+      video.autoplay = true;
+      video.playsInline = true;
+      thumb.replaceWith(video);
+      if (window.SamaSound) window.SamaSound.play('video');
+    });
+  });
+
+  if (window.__SAMA_ADMIN__) {
+    uploadedVideoGrid.querySelectorAll('[data-delete-video]').forEach(btn => {
+      btn.addEventListener('click', async e => {
+        e.stopPropagation();
+        const id = btn.dataset.deleteVideo;
+        if (!confirm('Delete this video? (Note: this only removes it from your local browser — to remove from the live site, edit videos-manifest.json)')) return;
+        await SamaMedia.deleteVideo(id);
+        if (window.SamaSound) window.SamaSound.play('close');
+      });
+    });
+  }
+}
+
+// Drag-drop + click for video uploader
+videoUploader.addEventListener('click', e => {
+  if (e.target.tagName === 'INPUT') return;
+  videoFileInput.click();
+});
+videoFileInput.addEventListener('change', e => {
+  if (e.target.files.length) handleVideoUpload(Array.from(e.target.files));
+});
+['dragenter', 'dragover'].forEach(ev => {
+  videoUploader.addEventListener(ev, e => { e.preventDefault(); videoUploader.classList.add('dragover'); });
+});
+['dragleave', 'drop'].forEach(ev => {
+  videoUploader.addEventListener(ev, e => { e.preventDefault(); videoUploader.classList.remove('dragover'); });
+});
+videoUploader.addEventListener('drop', e => {
+  e.preventDefault();
+  if (e.dataTransfer.files.length) handleVideoUpload(Array.from(e.dataTransfer.files));
+});
+
+async function handleVideoUpload(files) {
+  showProgress(`Uploading ${files.length} video${files.length > 1 ? 's' : ''}...`);
+  try {
+    await SamaMedia.addVideos(files);
+    if (window.SamaSound) window.SamaSound.play('forward');
+  } catch (err) {
+    console.error(err);
+  } finally {
+    hideProgress();
+    videoFileInput.value = '';
+  }
+}
+
+document.addEventListener('sama-videos-changed', renderVideos);
+renderVideos();
+
+/* ============================================
+   GALLERY (manifest + admin uploads)
+   ============================================
+   Visitors see photos from pics-manifest.json (committed to repo).
+   Admin (you) can ALSO upload locally for staging via the upload UI.
+   ============================================ */
+const galleryGrid = document.getElementById('galleryGrid');
+const galleryEmpty = document.getElementById('galleryEmpty');
+const photoUploader = document.getElementById('photoUploader');
+const photoUploaderInput = document.getElementById('photoUploaderInput');
+
+const livePhotoUrls = new Set();
+function revokePhotoUrls() {
+  livePhotoUrls.forEach(u => URL.revokeObjectURL(u));
+  livePhotoUrls.clear();
+}
+
+let manifestPhotos = []; // loaded from pics-manifest.json
+
+async function loadManifestPhotos() {
+  try {
+    const r = await fetch('pics-manifest.json', { cache: 'no-cache' });
+    if (!r.ok) return [];
+    const data = await r.json();
+    return (data.photos || []).map(p => ({
+      id: 'mf_' + p.file,
+      name: p.label || p.file.replace(/\.[^.]+$/, ''),
+      url: 'pics/' + p.file,
+      isManifest: true
+    }));
+  } catch (err) {
+    console.warn('No pics-manifest.json found or invalid');
+    return [];
+  }
+}
+
+async function renderGallery() {
+  revokePhotoUrls();
+  manifestPhotos = await loadManifestPhotos();
+
+  // In admin mode, also include locally-uploaded photos
+  let localPhotos = [];
+  if (window.__SAMA_ADMIN__) {
+    const items = await SamaMedia.getPhotos();
+    localPhotos = items.map(item => {
+      const thumbURL = SamaMedia.blobToURL(item.thumb);
+      livePhotoUrls.add(thumbURL);
+      return {
+        id: item.id,
+        name: item.name,
+        url: thumbURL,
+        item: item, // keep ref for full-size view + delete
+        isManifest: false
+      };
+    });
+  }
+
+  const allPhotos = [...manifestPhotos, ...localPhotos];
+
+  if (!allPhotos.length) {
+    galleryGrid.innerHTML = '';
+    galleryEmpty.hidden = false;
+    galleryGrid.style.display = 'none';
+    return;
+  }
+  galleryEmpty.hidden = true;
+  galleryGrid.style.display = '';
+  galleryGrid.innerHTML = allPhotos.map(photo => `
+    <div class="gallery-item" data-id="${photo.id}" data-hover>
+      <img src="${photo.url}" alt="${photo.name}" loading="lazy" />
+      <div class="gallery-label">${photo.name}</div>
+      ${!photo.isManifest && window.__SAMA_ADMIN__ ? `
+        <button class="media-delete" data-delete-photo="${photo.id}" data-hover aria-label="Delete">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      ` : ''}
+    </div>
+  `).join('');
+
+  galleryGrid.querySelectorAll('.gallery-item').forEach(el => {
+    el.addEventListener('click', async e => {
+      if (e.target.closest('[data-delete-photo]')) return;
+      const id = el.dataset.id;
+      const photo = allPhotos.find(p => p.id === id);
+      if (!photo) return;
+      let fullURL;
+      if (photo.isManifest) {
+        fullURL = photo.url;
+      } else {
+        fullURL = SamaMedia.blobToURL(photo.item.full);
+      }
+      openPhotoLightbox(fullURL);
+    });
+  });
+
+  if (window.__SAMA_ADMIN__) {
+    galleryGrid.querySelectorAll('[data-delete-photo]').forEach(btn => {
+      btn.addEventListener('click', async e => {
+        e.stopPropagation();
+        const id = btn.dataset.deletePhoto;
+        if (!confirm('Delete this photo? (Note: this only removes it from your local browser — to remove from the live site, edit pics-manifest.json)')) return;
+        await SamaMedia.deletePhoto(id);
+        if (window.SamaSound) window.SamaSound.play('close');
+      });
+    });
+  }
+}
+
+// Photo uploader UX
+photoUploader.addEventListener('click', e => {
+  if (e.target.tagName === 'INPUT') return;
+  photoUploaderInput.click();
+});
+photoUploaderInput.addEventListener('change', e => {
+  if (e.target.files.length) handlePhotoUpload(Array.from(e.target.files));
+});
+['dragenter', 'dragover'].forEach(ev => {
+  photoUploader.addEventListener(ev, e => { e.preventDefault(); photoUploader.classList.add('dragover'); });
+});
+['dragleave', 'drop'].forEach(ev => {
+  photoUploader.addEventListener(ev, e => { e.preventDefault(); photoUploader.classList.remove('dragover'); });
+});
+photoUploader.addEventListener('drop', e => {
+  e.preventDefault();
+  if (e.dataTransfer.files.length) handlePhotoUpload(Array.from(e.dataTransfer.files));
+});
+
+async function handlePhotoUpload(files) {
+  showProgress(`Uploading ${files.length} photo${files.length > 1 ? 's' : ''}...`);
+  try {
+    await SamaMedia.addPhotos(files);
+    if (window.SamaSound) window.SamaSound.play('forward');
+  } catch (err) {
+    console.error(err);
+  } finally {
+    hideProgress();
+    photoUploaderInput.value = '';
+  }
+}
+
+document.addEventListener('sama-photos-changed', renderGallery);
+renderGallery();
+
+/* ============================================
+   PROGRESS toast + photo lightbox
+   ============================================ */
+let progressEl = null;
+function showProgress(msg) {
+  if (!progressEl) {
+    progressEl = document.createElement('div');
+    progressEl.className = 'upload-progress';
+    document.body.appendChild(progressEl);
+  }
+  progressEl.textContent = msg;
+  progressEl.classList.add('show');
+}
+function hideProgress() {
+  if (progressEl) progressEl.classList.remove('show');
+}
+
+function openPhotoLightbox(url) {
+  // Reuse the existing video lightbox infrastructure
+  const lb = document.getElementById('lightbox');
+  const lbContent = lb.querySelector('.lightbox-content');
+  const iframe = document.getElementById('lightboxIframe');
+  // Hide iframe, show photo
+  iframe.style.display = 'none';
+  let photoEl = lbContent.querySelector('.lightbox-photo');
+  if (!photoEl) {
+    photoEl = document.createElement('img');
+    photoEl.className = 'lightbox-photo';
+    photoEl.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
+    lbContent.appendChild(photoEl);
+  }
+  photoEl.src = url;
+  photoEl.style.display = 'block';
+  lb.classList.add('active');
+  if (window.SamaSound) window.SamaSound.play('photo');
+}
+
+/* AI TOOLS */
+const toolsGrid = document.getElementById('toolsGrid');
+toolsGrid.innerHTML = tools.map(t => `
+  <a href="${t.url}" target="_blank" rel="noopener" class="tool-card" data-hover>
+    <div class="tool-card-head">
+      <span class="tool-cat">${t.cat}</span>
+      <span class="tool-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M9 7h8v8"/></svg>
+      </span>
+    </div>
+    <div class="tool-name">${t.name}</div>
+    <div class="tool-desc">${t.desc}</div>
+  </a>
+`).join('');
+
+/* SOCIAL */
+const socialList = document.getElementById('socialList');
+socialList.innerHTML = socials.map(s => `
+  <li class="social-item">
+    <a href="${s.url}" target="_blank" rel="noopener" class="social-link" data-hover>
+      <span class="social-name">
+        <span class="social-icon">${s.icon}</span>
+        ${s.name}
+      </span>
+      <span class="social-handle">${s.handle}</span>
+    </a>
+  </li>
+`).join('');
+
+/* Lightbox (kept for legacy + new photo viewing) */
+const lightbox = document.getElementById('lightbox');
+const lightboxIframe = document.getElementById('lightboxIframe');
+document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', e => {
+  if (e.target === lightbox) {
+    if (window.SamaSound) window.SamaSound.play('close');
+    closeLightbox();
+  }
+});
+function closeLightbox() {
+  lightbox.classList.remove('active');
+  lightboxIframe.src = '';
+  const photo = lightbox.querySelector('.lightbox-photo');
+  if (photo) { photo.style.display = 'none'; photo.src = ''; }
+  lightboxIframe.style.display = '';
+}
+
+/* SCROLL REVEAL */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ESC closes lightbox */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+    if (window.SamaSound) window.SamaSound.play('close');
+    closeLightbox();
+  }
+});
+</script>
+
+<!-- SOUND ENGINE -->
+<script src="sounds-data.js"></script>
+<script src="sound-engine.js"></script>
+<script src="photo-customizer.js"></script>
+</body>
+</html>

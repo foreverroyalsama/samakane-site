@@ -1,0 +1,4 @@
+{
+  "_README": "Add your photos to the 'pics/' folder, then list their filenames here. Example: { \"file\": \"01-studio.jpg\", \"label\": \"Studio Session\" }. After editing this file and adding photos, commit + push to deploy.",
+  "photos": []
+}

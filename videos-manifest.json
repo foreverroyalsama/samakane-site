@@ -1,0 +1,4 @@
+{
+  "_README": "Add your videos to the 'videos/' folder, then list their filenames here. Example: { \"file\": \"01-studio.mp4\", \"title\": \"Studio Session\", \"poster\": \"01-studio.jpg\" }. Poster is optional. After editing this file and adding videos, commit + push to deploy.",
+  "videos": []
+}

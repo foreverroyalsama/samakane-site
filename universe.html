@@ -3416,21 +3416,20 @@ function hideProgress() {
 }
 
 function openPhotoLightbox(url) {
-  // Reuse the existing video lightbox infrastructure
   const lb = document.getElementById('lightbox');
   const lbContent = lb.querySelector('.lightbox-content');
   const iframe = document.getElementById('lightboxIframe');
-  // Hide iframe, show photo
   iframe.style.display = 'none';
+  // Switch content box to photo mode (drop 16/9 aspect ratio)
+  lbContent.style.cssText = 'aspect-ratio:unset;width:auto;max-width:95vw;max-height:90vh;display:flex;align-items:center;justify-content:center;';
   let photoEl = lbContent.querySelector('.lightbox-photo');
   if (!photoEl) {
     photoEl = document.createElement('img');
     photoEl.className = 'lightbox-photo';
-    photoEl.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
     lbContent.appendChild(photoEl);
   }
+  photoEl.style.cssText = 'max-width:95vw;max-height:90vh;width:auto;height:auto;object-fit:contain;display:block;';
   photoEl.src = url;
-  photoEl.style.display = 'block';
   lb.classList.add('active');
   if (window.SamaSound) window.SamaSound.play('photo');
 }
@@ -3477,6 +3476,8 @@ lightbox.addEventListener('click', e => {
 function closeLightbox() {
   lightbox.classList.remove('active');
   lightboxIframe.src = '';
+  const lbContent = lightbox.querySelector('.lightbox-content');
+  lbContent.style.cssText = '';
   const photo = lightbox.querySelector('.lightbox-photo');
   if (photo) { photo.style.display = 'none'; photo.src = ''; }
   lightboxIframe.style.display = '';

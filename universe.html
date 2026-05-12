@@ -2277,6 +2277,160 @@
     .photo-modal-panel { padding: 32px 22px; }
     .photo-modal-title { font-size: 1.7rem; }
   }
+  /* ============================================
+     ABOUT
+     ============================================ */
+  .about { background: var(--ink-2); }
+  .about-body { max-width: 860px; margin-top: 48px; }
+  .about-lead {
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.45;
+    color: var(--bone);
+    margin-bottom: 32px;
+  }
+  .about-body p {
+    font-size: 1.05rem;
+    color: rgba(245, 240, 232, 0.65);
+    line-height: 1.85;
+    max-width: 640px;
+    margin-bottom: 20px;
+  }
+
+  /* ============================================
+     EVENTS
+     ============================================ */
+  .events-list { margin-top: 48px; }
+  .event-item {
+    display: grid;
+    grid-template-columns: 140px 1fr auto;
+    align-items: center;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+    gap: 40px;
+    transition: background 0.3s;
+  }
+  .event-item:first-child { border-top: 1px solid var(--line); }
+  .event-date {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .event-title {
+    font-family: var(--serif);
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    font-weight: 300;
+  }
+  .event-venue {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: rgba(245, 240, 232, 0.45);
+    margin-top: 5px;
+    text-transform: uppercase;
+  }
+  .event-ticket {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--bone);
+    border: 1px solid var(--line-strong);
+    padding: 10px 20px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: border-color 0.3s, color 0.3s;
+  }
+  .event-ticket:hover { border-color: var(--gold); color: var(--gold); }
+  .events-empty {
+    padding: 60px 0;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    color: rgba(245, 240, 232, 0.3);
+    text-transform: uppercase;
+  }
+  @media (max-width: 640px) {
+    .event-item { grid-template-columns: 1fr; gap: 12px; padding: 24px 0; }
+  }
+
+  /* ============================================
+     BOOKING / CONTACT FORM
+     ============================================ */
+  .booking { background: var(--ink); }
+  .booking-form { max-width: 680px; margin-top: 48px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+  .form-group label {
+    font-family: var(--mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.45);
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: var(--ink-2);
+    border: 1px solid var(--line-strong);
+    color: var(--bone);
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    font-weight: 300;
+    padding: 14px 18px;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.3s;
+    -webkit-appearance: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--gold); }
+  .form-group textarea { resize: vertical; min-height: 140px; }
+  .form-group select option { background: var(--ink-2); }
+  .form-submit {
+    background: none;
+    border: 1px solid var(--bone);
+    color: var(--bone);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 18px 48px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.4s;
+    margin-top: 8px;
+  }
+  .form-submit::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: translateY(101%);
+    transition: transform 0.5s var(--ease-out);
+  }
+  .form-submit:hover::before { transform: translateY(0); }
+  .form-submit:hover { color: var(--ink); }
+  .form-submit span { position: relative; z-index: 1; }
+  .form-submit:disabled { opacity: 0.5; pointer-events: none; }
+  .form-status {
+    margin-top: 20px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    min-height: 20px;
+  }
+  .form-status.success { color: #4ade80; }
+  .form-status.error { color: var(--rust); }
+  @media (max-width: 640px) {
+    .form-row { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -2298,12 +2452,14 @@
     <a href="index.html" class="nav-mark" data-hover>Sama Kane</a>
   </div>
   <ul class="nav-links">
+    <li><a href="#about" data-hover>About</a></li>
     <li><a href="#music" data-hover>Music</a></li>
     <li><a href="#videos" data-hover>Videos</a></li>
     <li><a href="#films" data-hover>Films</a></li>
     <li><a href="#gallery" data-hover>Gallery</a></li>
+    <li><a href="#events" data-hover>Events</a></li>
     <li><a href="#social" data-hover>Connect</a></li>
-    <li><a href="#ai-tools" data-hover>Atelier</a></li>
+    <li><a href="#booking" data-hover>Bookings</a></li>
   </ul>
   <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
     <span></span><span></span><span></span>
@@ -2311,11 +2467,14 @@
 </nav>
 
 <div class="nav-mobile" id="navMobile">
+  <a href="#about" class="nav-mobile-link">About</a>
   <a href="#music" class="nav-mobile-link">Music</a>
   <a href="#videos" class="nav-mobile-link">Videos</a>
   <a href="#films" class="nav-mobile-link">Films</a>
   <a href="#gallery" class="nav-mobile-link">Gallery</a>
+  <a href="#events" class="nav-mobile-link">Events</a>
   <a href="#social" class="nav-mobile-link">Connect</a>
+  <a href="#booking" class="nav-mobile-link">Bookings</a>
   <a href="#ai-tools" class="nav-mobile-link">Atelier</a>
 </div>
 
@@ -2333,6 +2492,21 @@
       <span>Atelier</span>
       <span>Connect</span>
     </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="content about" id="about">
+  <div class="section-header reveal">
+    <div>
+      <span class="section-num">00 — About</span>
+      <h2 class="section-title">The <em>Story</em></h2>
+    </div>
+  </div>
+  <div class="about-body reveal delay-1">
+    <p class="about-lead">Where sound becomes vision, and vision becomes world.</p>
+    <p>Sama Kane is a musician, visual artist, and world-builder working at the intersection of human emotion and machine imagination. Her music drifts between the cinematic and the intimate — deeply personal, sonically expansive — while her visual work explores identity, beauty, and the surreal through AI-assisted imagery and film.</p>
+    <p>Every release is its own universe. This site is the key inside.</p>
   </div>
 </section>
 
@@ -2541,6 +2715,18 @@
   </div>
 </section>
 
+<!-- EVENTS -->
+<section class="content events" id="events">
+  <div class="section-header reveal">
+    <div>
+      <span class="section-num">05 — Live</span>
+      <h2 class="section-title">On <em>Stage</em></h2>
+    </div>
+    <p class="section-desc">Upcoming shows and appearances.</p>
+  </div>
+  <div class="events-list reveal delay-1" id="eventsList"></div>
+</section>
+
 <!-- SOCIAL -->
 <section class="content social" id="social">
   <div class="section-header reveal">
@@ -2551,6 +2737,49 @@
     <p class="section-desc">Follow the trail. New work, behind-the-scenes, and conversations.</p>
   </div>
   <ul class="social-list reveal delay-1" id="socialList"></ul>
+</section>
+
+<!-- BOOKING -->
+<section class="content booking" id="booking">
+  <div class="section-header reveal">
+    <div>
+      <span class="section-num">07 — Contact</span>
+      <h2 class="section-title">Get in <em>Touch</em></h2>
+    </div>
+    <p class="section-desc">Collaborations, press, bookings, or just to say hello.</p>
+  </div>
+  <form class="booking-form reveal delay-1" id="bookingForm" novalidate>
+    <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_KEY" />
+    <input type="hidden" name="subject" value="New message — samakane.com" />
+    <input type="hidden" name="from_name" value="Sama Kane Site" />
+    <div class="form-row">
+      <div class="form-group">
+        <label for="f-name">Name</label>
+        <input type="text" id="f-name" name="name" placeholder="Your name" required />
+      </div>
+      <div class="form-group">
+        <label for="f-email">Email</label>
+        <input type="email" id="f-email" name="email" placeholder="your@email.com" required />
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="f-type">Inquiry type</label>
+      <select id="f-type" name="inquiry_type">
+        <option value="">Select one</option>
+        <option value="booking">Booking / Performance</option>
+        <option value="collaboration">Collaboration</option>
+        <option value="press">Press / Media</option>
+        <option value="sync">Sync Licensing</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="f-message">Message</label>
+      <textarea id="f-message" name="message" placeholder="Tell me about your project or inquiry..." required></textarea>
+    </div>
+    <button type="submit" class="form-submit" data-hover><span>Send Message →</span></button>
+    <div class="form-status" id="formStatus"></div>
+  </form>
 </section>
 
 <!-- AI TOOLS -->
@@ -2667,6 +2896,11 @@ const tools = [
   { name: "ChatGPT", cat: "AI", desc: "Versatile AI assistant for brainstorming, copy, and creative flow.", url: "https://chatgpt.com" },
   { name: "Grok", cat: "AI", desc: "Real-time AI with a sharp perspective and unfiltered creativity.", url: "https://grok.com" },
   { name: "DistroKid", cat: "Distribution", desc: "Get your music on every platform worldwide, instantly.", url: "https://distrokid.com" }
+];
+
+const events = [
+  // Add upcoming shows here. Example:
+  // { date: '2026-08-10', title: 'Club Name / Event Name', venue: 'City, Country', ticketUrl: 'https://...' },
 ];
 
 const socials = [
@@ -3505,6 +3739,65 @@ function openPhotoLightbox(url) {
   if (window.SamaSound) window.SamaSound.play('photo');
 }
 
+/* EVENTS */
+const eventsList = document.getElementById('eventsList');
+if (eventsList) {
+  if (events.length) {
+    eventsList.innerHTML = events.map(e => {
+      const d = new Date(e.date);
+      const month = d.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+      const day = String(d.getDate()).padStart(2, '0');
+      const year = d.getFullYear();
+      return `
+        <div class="event-item reveal">
+          <div class="event-date">${month} ${day} · ${year}</div>
+          <div class="event-info">
+            <div class="event-title">${e.title}</div>
+            <div class="event-venue">${e.venue}</div>
+          </div>
+          ${e.ticketUrl
+            ? `<a href="${e.ticketUrl}" target="_blank" rel="noopener" class="event-ticket" data-hover>Tickets →</a>`
+            : `<span class="event-ticket" style="opacity:0.3;pointer-events:none">Soon</span>`}
+        </div>`;
+    }).join('');
+  } else {
+    eventsList.innerHTML = `<div class="events-empty">No upcoming dates — check back soon.</div>`;
+  }
+}
+
+/* BOOKING FORM */
+const bookingForm = document.getElementById('bookingForm');
+const formStatus = document.getElementById('formStatus');
+if (bookingForm) {
+  bookingForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn = bookingForm.querySelector('.form-submit');
+    const btnText = btn.querySelector('span');
+    btn.disabled = true;
+    btnText.textContent = 'Sending…';
+    formStatus.textContent = '';
+    formStatus.className = 'form-status';
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(bookingForm)))
+      });
+      const json = await res.json();
+      if (json.success) {
+        formStatus.textContent = 'Message received — I\'ll be in touch soon.';
+        formStatus.className = 'form-status success';
+        bookingForm.reset();
+      } else { throw new Error(); }
+    } catch {
+      formStatus.textContent = 'Something went wrong. Try emailing directly at foreverroyalsama@gmail.com';
+      formStatus.className = 'form-status error';
+    }
+    btn.disabled = false;
+    btnText.textContent = 'Send Message →';
+  });
+}
+
 /* AI TOOLS */
 const toolsGrid = document.getElementById('toolsGrid');
 toolsGrid.innerHTML = tools.map(t => `
@@ -3566,7 +3859,7 @@ const io = new IntersectionObserver(entries => {
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 /* NAV SCROLLSPY */
-const navSections = ['music', 'videos', 'films', 'gallery', 'social', 'ai-tools'];
+const navSections = ['about', 'music', 'videos', 'films', 'gallery', 'events', 'social', 'booking', 'ai-tools'];
 const navLinks = document.querySelectorAll('.nav-links a');
 const navObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {

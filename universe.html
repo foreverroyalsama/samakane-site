@@ -2362,6 +2362,21 @@
     transition: border-color 0.3s, color 0.3s;
   }
   .event-ticket:hover { border-color: var(--gold); color: var(--gold); }
+  .event-type {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-left: 10px;
+    vertical-align: middle;
+    opacity: 0.85;
+  }
   .events-empty {
     padding: 60px 0;
     font-family: var(--mono);
@@ -2740,7 +2755,7 @@
       <span class="section-num">05 — Live</span>
       <h2 class="section-title">On <em>Stage</em></h2>
     </div>
-    <p class="section-desc">Upcoming shows and appearances.</p>
+    <p class="section-desc">Upcoming releases and appearances.</p>
   </div>
   <div class="events-list reveal delay-1" id="eventsList"></div>
 </section>
@@ -2917,8 +2932,8 @@ const tools = [
 ];
 
 const events = [
-  // Add upcoming shows here. Example:
-  // { date: '2026-08-10', title: 'Club Name / Event Name', venue: 'City, Country', ticketUrl: 'https://...' },
+  { date: '2026-05-15', title: 'Tidebound', venue: 'Single & Music Video', type: 'Release' },
+  { date: '2026-06-05', title: 'Dragon Mother — The War', venue: 'Feature Film', type: 'Film' },
 ];
 
 const socials = [
@@ -3770,7 +3785,7 @@ if (eventsList) {
         <div class="event-item reveal">
           <div class="event-date">${month} ${day} · ${year}</div>
           <div class="event-info">
-            <div class="event-title">${e.title}</div>
+            <div class="event-title">${e.title}${e.type ? ` <span class="event-type">${e.type}</span>` : ''}</div>
             <div class="event-venue">${e.venue}</div>
           </div>
           ${e.ticketUrl

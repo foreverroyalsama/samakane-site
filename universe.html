@@ -157,6 +157,8 @@
     .cursor-dot, .cursor-ring { display: none; }
   }
   ::selection { background: var(--gold); color: var(--ink); }
+  :focus-visible { outline: 1.5px solid var(--gold); outline-offset: 3px; }
+  [data-hover]:focus-visible { outline-offset: 4px; }
 
   /* page enter animation */
   .page-enter {
@@ -286,7 +288,38 @@
     .nav-mark { font-size: 1.1rem; }
     .nav-links { display: none; }
     .back-link { padding: 8px 12px; font-size: 0.62rem; }
+    .nav-burger {
+      display: flex; flex-direction: column; justify-content: center; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 8px; margin-left: auto;
+    }
+    .nav-burger span {
+      display: block; width: 22px; height: 1px;
+      background: var(--bone);
+      transition: transform 0.4s var(--ease-out), opacity 0.3s;
+    }
+    .nav-burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
   }
+  @media (min-width: 969px) { .nav-burger { display: none; } }
+
+  .nav-mobile {
+    position: fixed; inset: 0;
+    background: rgba(10, 10, 10, 0.97); backdrop-filter: blur(20px);
+    z-index: 99;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.5s var(--ease-out), visibility 0.5s;
+  }
+  .nav-mobile.open { opacity: 1; visibility: visible; }
+  .nav-mobile a {
+    font-family: var(--serif); font-size: clamp(2rem, 8vw, 3.5rem);
+    font-weight: 300; font-style: italic; color: var(--bone);
+    text-decoration: none; letter-spacing: -0.02em;
+    padding: 6px 0;
+    transition: color 0.3s;
+  }
+  .nav-mobile a:hover { color: var(--gold); }
 
   /* HERO TOP for Universe page */
   .universe-hero {
@@ -798,7 +831,7 @@
     width: 100%; height: 100%;
     object-fit: cover;
     transition: transform 0.8s var(--ease-out), filter 0.4s;
-    filter: grayscale(0.4) brightness(0.7);
+    filter: grayscale(0.15) brightness(0.88);
   }
   .video-card:hover .thumb { transform: scale(1.06); filter: grayscale(0) brightness(1); }
   .video-card::before {
@@ -908,10 +941,10 @@
   .gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 16px;
+    gap: 24px;
   }
   @media (max-width: 768px) {
-    .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   }
   @media (max-width: 440px) {
     .gallery-grid { grid-template-columns: 1fr; }
@@ -928,11 +961,11 @@
   .gallery-item img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* show the full photo, no cropping */
+    object-fit: cover;
+    object-position: center top;
     display: block;
     transition: transform 0.7s var(--ease-out), filter 0.5s;
     filter: grayscale(0.15);
-    background: var(--ink); /* fills letterbox area in same color */
   }
   .gallery-item:hover img { transform: scale(1.04); filter: grayscale(0); }
   .gallery-item::after {
@@ -2272,7 +2305,19 @@
     <li><a href="#social" data-hover>Connect</a></li>
     <li><a href="#ai-tools" data-hover>Atelier</a></li>
   </ul>
+  <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="#music" class="nav-mobile-link">Music</a>
+  <a href="#videos" class="nav-mobile-link">Videos</a>
+  <a href="#films" class="nav-mobile-link">Films</a>
+  <a href="#gallery" class="nav-mobile-link">Gallery</a>
+  <a href="#social" class="nav-mobile-link">Connect</a>
+  <a href="#ai-tools" class="nav-mobile-link">Atelier</a>
+</div>
 
 <!-- UNIVERSE HERO -->
 <section class="universe-hero">
@@ -2644,6 +2689,26 @@ const socials = [
   { name: "Email", handle: "foreverroyalsama@gmail.com", url: "mailto:foreverroyalsama@gmail.com",
     icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>' }
 ];
+
+/* ============================================
+   MOBILE NAV BURGER
+   ============================================ */
+const burger = document.getElementById('navBurger');
+const mobileNav = document.getElementById('navMobile');
+if (burger && mobileNav) {
+  burger.addEventListener('click', () => {
+    const open = mobileNav.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('.nav-mobile-link').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileNav.classList.remove('open');
+      burger.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    });
+  });
+}
 
 /* ============================================
    CURSOR
@@ -3330,7 +3395,7 @@ async function renderGallery() {
   galleryGrid.innerHTML = allPhotos.map(photo => `
     <div class="gallery-item" data-id="${photo.id}" data-hover>
       <img src="${photo.url}" alt="${photo.name}" loading="lazy" />
-      <div class="gallery-label">${photo.name}</div>
+      ${!photo.isManifest ? `<div class="gallery-label">${photo.name}</div>` : ''}
       ${!photo.isManifest && window.__SAMA_ADMIN__ ? `
         <button class="media-delete" data-delete-photo="${photo.id}" data-hover aria-label="Delete">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
@@ -3498,6 +3563,19 @@ const io = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.15 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* NAV SCROLLSPY */
+const navSections = ['music', 'videos', 'films', 'gallery', 'social', 'ai-tools'];
+const navLinks = document.querySelectorAll('.nav-links a');
+const navObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+navSections.forEach(id => { const el = document.getElementById(id); if (el) navObserver.observe(el); });
 
 /* ESC closes lightbox */
 document.addEventListener('keydown', e => {

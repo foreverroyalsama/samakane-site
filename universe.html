@@ -2946,7 +2946,8 @@ const filmThumbsGrid  = document.getElementById('filmThumbsGrid');
 const filmThumbsCount = document.getElementById('filmThumbsCount');
 const filmPlayerWrap  = document.querySelector('.film-player-wrap');
 
-let filmCurrentVideoId = FILM_FIRST_VIDEO;
+let filmCurrentVideoId = null;
+let filmInitialized = false;
 
 // ---- Player iframe (single video only — no playlist param) ----
 function setFilmIframe(videoId, autoplay) {
@@ -2964,7 +2965,6 @@ function setFilmIframe(videoId, autoplay) {
       style="width:100%;height:100%;border:0;display:block;"></iframe>
   `;
 }
-setFilmIframe(FILM_FIRST_VIDEO, false);
 
 function playFilm(videoId, title) {
   setFilmIframe(videoId, true);
@@ -3112,14 +3112,15 @@ function renderFilmThumbs(videos, partial) {
     el.addEventListener('click', () => playFilm(el.dataset.vid, el.dataset.title));
   });
 
-  // If our default video isn't in the loaded list, switch to the first one in the playlist
-  const current = videos.find(v => v.id === filmCurrentVideoId) || videos[0];
-  if (current) {
-    filmTitleEl.textContent = current.title;
-    if (!videos.find(v => v.id === filmCurrentVideoId)) {
-      filmCurrentVideoId = current.id;
-      setFilmIframe(current.id, false);
-    }
+  // On first load, always default to the first video in the actual playlist
+  if (!filmInitialized && videos.length) {
+    filmInitialized = true;
+    const first = videos[0];
+    filmTitleEl.textContent = first.title;
+    setFilmIframe(first.id, false);
+  } else if (filmCurrentVideoId) {
+    const current = videos.find(v => v.id === filmCurrentVideoId);
+    if (current) filmTitleEl.textContent = current.title;
   }
 }
 
@@ -3145,8 +3146,8 @@ function renderFilmThumbs(videos, partial) {
     return;
   }
 
-  // Last resort
-  renderFilmThumbs([{ id: FILM_FIRST_VIDEO, title: 'Spark It Up — Sama Kane' }], true);
+  // Last resort — show placeholder until API responds
+  filmStageEl.innerHTML = '';
 })();
 
 /* ============================================

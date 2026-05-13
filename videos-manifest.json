@@ -1,5 +1,6 @@
 {
   "videos": [
+    { "file": "video-00.mp4", "title": "Video 00", "width": 1920, "height": 1080 },
     { "file": "video-01.mp4", "title": "Coffee Song", "width": 3840, "height": 2160 },
     { "file": "video-02.mp4", "title": "Video 02", "width": 1920, "height": 1080 },
     { "file": "video-05.mp4", "title": "Video 05", "width": 1920, "height": 1080 },
@@ -10,6 +11,14 @@
     { "file": "video-11.mp4", "title": "Natural Portrait", "width": 1920, "height": 1080 },
     { "file": "video-12.mp4", "title": "Fantasy", "width": 1920, "height": 1080 },
     { "file": "video-13.mp4", "title": "Solemnly Gazes", "width": 1920, "height": 1080 },
-    { "file": "video-14.mp4", "title": "Snow White", "width": 1920, "height": 1080 }
+    { "file": "video-14.mp4", "title": "Snow White", "width": 1920, "height": 1080 },
+    { "file": "video-15.mp4", "title": "Video 15", "width": 1920, "height": 1080 },
+    { "file": "video-16.mp4", "title": "Video 16", "width": 1920, "height": 1080 },
+    { "file": "video-17.mp4", "title": "Video 17", "width": 1920, "height": 1080 },
+    { "file": "video-18.mp4", "title": "Video 18", "width": 1920, "height": 1080 },
+    { "file": "video-19.mp4", "title": "Video 19", "width": 1920, "height": 1080 },
+    { "file": "video-20.mp4", "title": "AI Portrait", "width": 1920, "height": 1080 },
+    { "file": "video-21.mp4", "title": "Makeup", "width": 1920, "height": 1080 },
+    { "file": "video-22.mp4", "title": "Dance in Rain", "width": 1920, "height": 1080 }
   ]
 }

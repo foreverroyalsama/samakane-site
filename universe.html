@@ -2782,9 +2782,6 @@
     <p class="section-desc">Collaborations, press, bookings, or just to say hello.</p>
   </div>
   <form class="booking-form reveal delay-1" id="bookingForm" novalidate>
-    <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_KEY" />
-    <input type="hidden" name="subject" value="New message — samakane.com" />
-    <input type="hidden" name="from_name" value="Sama Kane Site" />
     <div class="form-row">
       <div class="form-group">
         <label for="f-name">Name</label>
@@ -3802,32 +3799,25 @@ if (eventsList) {
 const bookingForm = document.getElementById('bookingForm');
 const formStatus = document.getElementById('formStatus');
 if (bookingForm) {
-  bookingForm.addEventListener('submit', async e => {
+  bookingForm.addEventListener('submit', e => {
     e.preventDefault();
-    const btn = bookingForm.querySelector('.form-submit');
-    const btnText = btn.querySelector('span');
-    btn.disabled = true;
-    btnText.textContent = 'Sending…';
-    formStatus.textContent = '';
-    formStatus.className = 'form-status';
-    try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.fromEntries(new FormData(bookingForm)))
-      });
-      const json = await res.json();
-      if (json.success) {
-        formStatus.textContent = 'Message received — I\'ll be in touch soon.';
-        formStatus.className = 'form-status success';
-        bookingForm.reset();
-      } else { throw new Error(); }
-    } catch {
-      formStatus.textContent = 'Something went wrong. Try emailing directly at foreverroyalsama@gmail.com';
+    const name    = bookingForm.querySelector('[name="name"]').value.trim();
+    const email   = bookingForm.querySelector('[name="email"]').value.trim();
+    const type    = bookingForm.querySelector('[name="inquiry_type"]').value;
+    const message = bookingForm.querySelector('[name="message"]').value.trim();
+    if (!name || !email || !message) {
+      formStatus.textContent = 'Please fill in your name, email, and message.';
       formStatus.className = 'form-status error';
+      return;
     }
-    btn.disabled = false;
-    btnText.textContent = 'Send Message →';
+    const subject = encodeURIComponent('New message — samakane.com' + (type ? ' [' + type + ']' : ''));
+    const body    = encodeURIComponent(
+      'Name: ' + name + '\nEmail: ' + email + (type ? '\nInquiry: ' + type : '') + '\n\n' + message
+    );
+    window.location.href = 'mailto:foreverroyalsama@gmail.com?subject=' + subject + '&body=' + body;
+    formStatus.textContent = 'Opening your email app — if nothing opens, email foreverroyalsama@gmail.com directly.';
+    formStatus.className = 'form-status success';
+    bookingForm.reset();
   });
 }
 

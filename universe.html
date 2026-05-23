@@ -2927,8 +2927,10 @@ const tools = [
 ];
 
 const events = [
-  { date: '2026-05-15', title: 'Tidebound', venue: 'Single & Music Video', type: 'Release' },
   { date: '2026-06-05', title: 'Dragon Mother — The War', venue: 'Feature Film', type: 'Film' },
+  { title: 'Still Thinking About Me', venue: 'Single & Music Video', type: 'Release' },
+  { title: 'Small Town Trouble', venue: 'Single & Music Video', type: 'Release' },
+  { title: 'The Russ Doll', venue: 'Coming Soon', type: 'Film', comingSoon: true },
 ];
 
 const socials = [
@@ -3772,20 +3774,28 @@ const eventsList = document.getElementById('eventsList');
 if (eventsList) {
   if (events.length) {
     eventsList.innerHTML = events.map(e => {
-      const d = new Date(e.date);
-      const month = d.toLocaleString('en-US', { month: 'short' }).toUpperCase();
-      const day = String(d.getDate()).padStart(2, '0');
-      const year = d.getFullYear();
+      let dateStr;
+      if (e.comingSoon) {
+        dateStr = `<span style="font-family:var(--mono);font-size:0.7rem;letter-spacing:0.08em;color:var(--gold);opacity:0.7">COMING SOON</span>`;
+      } else if (e.date) {
+        const d = new Date(e.date);
+        const month = d.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+        const day = String(d.getDate()).padStart(2, '0');
+        const year = d.getFullYear();
+        dateStr = `${month} ${day} · ${year}`;
+      } else {
+        dateStr = `<span style="font-family:var(--mono);font-size:0.7rem;letter-spacing:0.08em;opacity:0.45">DATE TBA</span>`;
+      }
       return `
         <div class="event-item reveal">
-          <div class="event-date">${month} ${day} · ${year}</div>
+          <div class="event-date">${dateStr}</div>
           <div class="event-info">
             <div class="event-title">${e.title}${e.type ? ` <span class="event-type">${e.type}</span>` : ''}</div>
             <div class="event-venue">${e.venue}</div>
           </div>
           ${e.ticketUrl
             ? `<a href="${e.ticketUrl}" target="_blank" rel="noopener" class="event-ticket" data-hover>Tickets →</a>`
-            : `<span class="event-ticket" style="opacity:0.3;pointer-events:none">Soon</span>`}
+            : `<span class="event-ticket" style="opacity:0.3;pointer-events:none">${e.comingSoon ? '···' : 'Soon'}</span>`}
         </div>`;
     }).join('');
   } else {

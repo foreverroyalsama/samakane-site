@@ -24,7 +24,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,400;1,500&family=Jost:wght@300;400&family=Great+Vibes&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
 <script src="media-manager.js"></script>
 <script>
   /* ============================================
@@ -2462,6 +2462,569 @@
   @media (max-width: 640px) {
     .form-row { grid-template-columns: 1fr; }
   }
+
+  /* ============================================
+     RENDER MAGAZINE
+     ============================================ */
+  :root {
+    --render-black: #0A0A0C;
+    --render-indigo: #171830;
+    --render-amber: #E8A13D;
+    --render-champagne: #F3E3BC;
+    --render-bone: #EFEBE2;
+    --render-phosphor: #8FD9C6;
+    --render-foil: linear-gradient(105deg,#7d5a1c 0%,#e9c87c 22%,#faf0cd 38%,#d3a94e 52%,#8a6420 68%,#eed9a0 86%,#b98f38 100%);
+    --render-hairline: rgba(233,200,124,.5);
+    --render-display: 'Bodoni Moda', serif;
+    --render-body: 'Cormorant Garamond', serif;
+    --render-label: 'Jost', sans-serif;
+    --render-script: 'Great Vibes', cursive;
+    --render-mono: 'Space Mono', monospace;
+  }
+
+  /* Foil text utility */
+  .render-foil-text {
+    background: var(--render-foil);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .magazine-section {
+    background: var(--render-black);
+    position: relative;
+    overflow: hidden;
+  }
+  .magazine-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 60vh;
+    background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(23,24,48,.8) 0%, transparent 100%);
+    pointer-events: none;
+  }
+  .magazine-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 40vh;
+    background: radial-gradient(ellipse 70% 50% at 50% 100%, rgba(232,161,61,.08) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  /* — Hero — */
+  .render-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    padding: 100px var(--edge) 80px;
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .render-hero-left { display: flex; flex-direction: column; gap: 28px; }
+  .render-eyebrow {
+    font-family: var(--render-label);
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: .4em;
+    text-transform: uppercase;
+    color: var(--render-amber);
+    margin-bottom: 4px;
+  }
+  .render-masthead {
+    font-family: var(--render-display);
+    font-size: clamp(4rem, 9vw, 8rem);
+    font-weight: 600;
+    letter-spacing: .08em;
+    line-height: 0.9;
+    margin: 0;
+  }
+  .render-script-line {
+    font-family: var(--render-script);
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    color: var(--render-champagne);
+    margin-top: -8px;
+    opacity: 0.85;
+  }
+  .render-hero-copy {
+    font-family: var(--render-body);
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    line-height: 1.8;
+    color: rgba(243,227,188,.7);
+    max-width: 520px;
+  }
+  .render-badge {
+    display: inline-block;
+    font-family: var(--render-mono);
+    font-size: 0.6rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--render-amber);
+    border: 1px solid var(--render-hairline);
+    padding: 7px 16px;
+    width: fit-content;
+  }
+  .render-ctas { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
+  .render-cta-primary {
+    font-family: var(--render-label);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    background: var(--render-foil);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    border: 1px solid var(--render-hairline);
+    padding: 13px 28px;
+    text-decoration: none;
+    transition: border-color .3s;
+    position: relative;
+  }
+  .render-cta-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(233,200,124,.04);
+    opacity: 0;
+    transition: opacity .3s;
+  }
+  .render-cta-primary:hover { border-color: var(--render-amber); }
+  .render-cta-primary:hover::before { opacity: 1; }
+  .render-cta-ghost {
+    font-family: var(--render-label);
+    font-size: 0.75rem;
+    font-weight: 300;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(243,227,188,.6);
+    border: 1px solid rgba(243,227,188,.2);
+    padding: 13px 28px;
+    text-decoration: none;
+    transition: border-color .3s, color .3s;
+  }
+  .render-cta-ghost:hover { border-color: rgba(243,227,188,.5); color: var(--render-champagne); }
+
+  /* Cover frame */
+  .render-cover-frame {
+    position: relative;
+    aspect-ratio: 1350/1750;
+    max-width: 460px;
+    margin: 0 auto;
+    transform: perspective(1200px) rotateY(-4deg) rotateX(1deg);
+    transition: transform .6s cubic-bezier(.16,1,.3,1);
+  }
+  .render-cover-frame:hover {
+    transform: perspective(1200px) rotateY(-1deg) rotateX(0deg);
+  }
+  .render-cover-frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,.08) 0%, transparent 50%);
+    z-index: 2;
+    pointer-events: none;
+  }
+  .render-cover-frame::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border: 1px solid var(--render-hairline);
+    z-index: 3;
+    pointer-events: none;
+  }
+  .render-cover-frame img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .render-cover-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(160deg, var(--render-indigo) 0%, var(--render-black) 60%, rgba(23,24,48,.5) 100%);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 16px;
+  }
+  .render-cover-placeholder-word {
+    font-family: var(--render-display);
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 600;
+    letter-spacing: .1em;
+    background: var(--render-foil);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .render-cover-placeholder-label {
+    font-family: var(--render-mono);
+    font-size: 0.55rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: rgba(243,227,188,.35);
+  }
+
+  /* Hairline divider */
+  .render-rule {
+    height: 1px;
+    background: var(--render-hairline);
+    margin: 0 var(--edge);
+    opacity: .5;
+  }
+
+  /* — Inside the Issue — */
+  .render-inside {
+    padding: 80px var(--edge);
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .render-section-eyebrow {
+    font-family: var(--render-label);
+    font-size: 0.6rem;
+    letter-spacing: .4em;
+    text-transform: uppercase;
+    color: var(--render-amber);
+    margin-bottom: 40px;
+  }
+  .render-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-bottom: 48px;
+  }
+  .render-feature-card {
+    background: rgba(23,24,48,.4);
+    border-top: 1px solid var(--render-hairline);
+    padding: 36px 32px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .render-feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,.03) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .render-feature-label {
+    font-family: var(--render-mono);
+    font-size: 0.6rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--render-phosphor);
+    margin-bottom: 20px;
+    display: block;
+  }
+  .render-feature-title {
+    font-family: var(--render-display);
+    font-size: clamp(1.3rem, 2vw, 1.7rem);
+    font-weight: 600;
+    color: var(--render-bone);
+    line-height: 1.2;
+    margin: 0 0 16px;
+  }
+  .render-feature-copy {
+    font-family: var(--render-body);
+    font-size: 1rem;
+    line-height: 1.75;
+    color: rgba(243,227,188,.6);
+    font-style: italic;
+    margin: 0;
+  }
+  .render-spread-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1714/1109;
+    background: var(--render-indigo);
+    overflow: hidden;
+  }
+  .render-spread-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .render-spread-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(90deg, var(--render-black) 0%, var(--render-indigo) 50%, var(--render-black) 100%);
+  }
+  .render-spread-caption {
+    position: absolute;
+    bottom: 16px; left: 24px;
+    font-family: var(--render-mono);
+    font-size: 0.55rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: rgba(243,227,188,.4);
+  }
+
+  /* — Pull-quote — */
+  .render-pullquote {
+    background: var(--render-black);
+    border-top: 1px solid var(--render-hairline);
+    border-bottom: 1px solid var(--render-hairline);
+    padding: 80px var(--edge);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .render-pullquote q {
+    font-family: var(--render-display);
+    font-size: clamp(1.6rem, 3.5vw, 3rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--render-champagne);
+    line-height: 1.4;
+    quotes: none;
+    display: block;
+    max-width: 860px;
+    margin: 0 auto 20px;
+  }
+  .render-pullquote-attr {
+    font-family: var(--render-mono);
+    font-size: 0.6rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: rgba(243,227,188,.4);
+  }
+
+  /* — BE RENDERED casting — */
+  .render-casting {
+    padding: 80px var(--edge);
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .render-casting-head { margin-bottom: 48px; }
+  .render-casting-title {
+    font-family: var(--render-display);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 600;
+    letter-spacing: .06em;
+    margin: 8px 0 4px;
+    line-height: 1;
+  }
+  .render-casting-subtitle {
+    font-family: var(--render-script);
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    color: var(--render-champagne);
+    opacity: .75;
+    margin-top: 6px;
+    display: block;
+  }
+  .render-casting-copy {
+    font-family: var(--render-body);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: rgba(243,227,188,.65);
+    margin-top: 20px;
+  }
+  .render-form { display: flex; flex-direction: column; gap: 24px; }
+  .render-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .render-form-group { display: flex; flex-direction: column; gap: 8px; }
+  .render-form-group label {
+    font-family: var(--render-label);
+    font-size: 0.6rem;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: rgba(243,227,188,.5);
+  }
+  .render-form-group input,
+  .render-form-group select,
+  .render-form-group textarea {
+    background: rgba(23,24,48,.6);
+    border: 1px solid rgba(233,200,124,.2);
+    color: var(--render-champagne);
+    padding: 12px 16px;
+    font-family: var(--render-body);
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color .3s;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+  .render-form-group input:focus,
+  .render-form-group select:focus,
+  .render-form-group textarea:focus { border-color: var(--render-amber); }
+  .render-form-group input::placeholder,
+  .render-form-group textarea::placeholder { color: rgba(243,227,188,.25); font-style: italic; }
+  .render-form-group select option { background: #171830; }
+  .render-form-group textarea { min-height: 120px; resize: vertical; }
+  .render-consent-wrap { display: flex; gap: 14px; align-items: flex-start; }
+  .render-consent-wrap input[type="checkbox"] {
+    width: 16px; height: 16px; flex-shrink: 0;
+    margin-top: 3px; accent-color: var(--render-amber);
+    border-radius: 0;
+  }
+  .render-consent-label {
+    font-family: var(--render-body);
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: rgba(243,227,188,.6);
+    font-style: italic;
+  }
+  .render-photo-note {
+    font-family: var(--render-mono);
+    font-size: 0.62rem;
+    letter-spacing: .08em;
+    color: rgba(143,217,198,.7);
+    border-left: 2px solid var(--render-phosphor);
+    padding-left: 14px;
+    line-height: 1.7;
+    opacity: .85;
+  }
+  .render-submit {
+    font-family: var(--render-label);
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid var(--render-hairline);
+    color: var(--render-amber);
+    padding: 16px 40px;
+    cursor: pointer;
+    transition: border-color .3s, background .3s;
+    width: fit-content;
+  }
+  .render-submit:hover { border-color: var(--render-amber); background: rgba(232,161,61,.05); }
+  .render-submit:disabled { opacity: .45; cursor: not-allowed; }
+  .render-form-status {
+    font-family: var(--render-body);
+    font-size: 0.95rem;
+    font-style: italic;
+    padding-top: 8px;
+    display: none;
+  }
+  .render-form-status.success { color: var(--render-phosphor); display: block; }
+  .render-form-status.error { color: #ff8a7a; display: block; }
+  .render-age-error {
+    font-family: var(--render-mono);
+    font-size: 0.65rem;
+    letter-spacing: .08em;
+    color: #ff8a7a;
+    display: none;
+  }
+
+  /* — FAQ — */
+  .render-faq {
+    padding: 60px var(--edge) 80px;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .render-faq-item {
+    border-top: 1px solid rgba(233,200,124,.2);
+  }
+  .render-faq-item:last-child { border-bottom: 1px solid rgba(233,200,124,.2); }
+  .render-faq-q {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 22px 0;
+    font-family: var(--render-display);
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    font-weight: 400;
+    color: var(--render-bone);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .render-faq-q:focus-visible { outline: 1.5px solid var(--render-amber); outline-offset: 3px; }
+  .render-faq-icon {
+    font-family: var(--render-label);
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--render-amber);
+    flex-shrink: 0;
+    transition: transform .35s var(--ease-out);
+  }
+  .render-faq-item.open .render-faq-icon { transform: rotate(45deg); }
+  .render-faq-a {
+    font-family: var(--render-body);
+    font-size: 1rem;
+    font-style: italic;
+    line-height: 1.8;
+    color: rgba(243,227,188,.6);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .4s var(--ease-out), padding .4s;
+    padding-bottom: 0;
+  }
+  .render-faq-item.open .render-faq-a { max-height: 300px; padding-bottom: 24px; }
+
+  /* — Closing band — */
+  .render-closing {
+    background: linear-gradient(180deg, var(--render-black) 0%, var(--render-indigo) 100%);
+    border-top: 1px solid var(--render-hairline);
+    padding: 80px var(--edge);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .render-closing-wordmark {
+    font-family: var(--render-display);
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 600;
+    letter-spacing: .1em;
+    line-height: 1;
+  }
+  .render-closing-issue {
+    font-family: var(--render-mono);
+    font-size: 0.6rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: rgba(243,227,188,.4);
+  }
+  .render-closing-ig {
+    font-family: var(--render-label);
+    font-size: 0.65rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: rgba(243,227,188,.45);
+    text-decoration: none;
+    transition: color .3s;
+  }
+  .render-closing-ig:hover { color: var(--render-amber); }
+  .render-disclosure {
+    font-family: var(--render-mono);
+    font-size: 0.5rem;
+    letter-spacing: .1em;
+    color: rgba(243,227,188,.2);
+    text-align: center;
+    padding: 16px var(--edge) 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .render-features { grid-template-columns: 1fr; gap: 1px; }
+  }
+  @media (max-width: 768px) {
+    .render-hero {
+      grid-template-columns: 1fr;
+      gap: 48px;
+      padding: 72px var(--edge) 60px;
+    }
+    .render-hero-right { order: -1; }
+    .render-cover-frame { max-width: 280px; transform: none; }
+    .render-cover-frame:hover { transform: none; }
+    .render-form-row { grid-template-columns: 1fr; }
+    .render-ctas { flex-direction: column; }
+    .render-cta-primary, .render-cta-ghost { text-align: center; }
+  }
 </style>
 </head>
 <body>
@@ -2491,6 +3054,7 @@
     <li><a href="#events" data-hover>Events</a></li>
     <li><a href="#social" data-hover>Connect</a></li>
     <li><a href="#booking" data-hover>Bookings</a></li>
+    <li><a href="#magazine" data-hover>Magazine</a></li>
   </ul>
   <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
     <span></span><span></span><span></span>
@@ -2507,6 +3071,7 @@
   <a href="#social" class="nav-mobile-link">Connect</a>
   <a href="#booking" class="nav-mobile-link">Bookings</a>
   <a href="#ai-tools" class="nav-mobile-link">Atelier</a>
+  <a href="#magazine" class="nav-mobile-link">Magazine</a>
 </div>
 
 <!-- UNIVERSE HERO -->
@@ -2831,6 +3396,179 @@
     <span class="arrow">←</span>
     <span>Return Home</span>
   </a>
+</section>
+
+<!-- MAGAZINE -->
+<section class="content magazine-section" id="magazine">
+
+  <!-- 1. Hero -->
+  <div class="render-hero">
+    <div class="render-hero-left reveal">
+      <div>
+        <div class="render-eyebrow">The Magazine of Synthetic Glamour</div>
+        <h2 class="render-masthead render-foil-text">RENDER</h2>
+        <div class="render-script-line">fashion, computed</div>
+      </div>
+      <p class="render-hero-copy">A luxury glossy built around Sama — the most watched face on the feed and the first cover star with no birthday. Cinematic fashion editorial, essays on AI culture with taste and occasional teeth, beauty, music, film — and a back-page column she writes herself.</p>
+      <div class="render-badge">Entirely Synthetic · Entirely Real</div>
+      <div class="render-ctas">
+        <a href="https://rendermag.gumroad.com/l/issue-001" target="_blank" rel="noopener" class="render-cta-primary" id="renderBuyBtn">Buy Issue 001 — $6.99</a>
+        <a href="https://render.substack.com" target="_blank" rel="noopener" class="render-cta-ghost" id="renderSubBtn">Subscribe — $49/yr</a>
+      </div>
+    </div>
+    <div class="render-hero-right reveal delay-1">
+      <div class="render-cover-frame">
+        <img src="render-cover.jpg" alt="RENDER Issue 001 cover — Sama in gold satin at first light" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="render-cover-placeholder" style="display:none">
+          <div class="render-cover-placeholder-word">RENDER</div>
+          <div class="render-cover-placeholder-label">Issue 001 · First Light</div>
+          <div class="render-cover-placeholder-label" style="margin-top:8px;opacity:.5">Cover arriving soon</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="render-rule"></div>
+
+  <!-- 2. Inside the Issue -->
+  <div class="render-inside reveal">
+    <div class="render-section-eyebrow">Inside Issue 001 · First Light</div>
+    <div class="render-features">
+      <div class="render-feature-card">
+        <span class="render-feature-label">Feature I</span>
+        <h3 class="render-feature-title">The Interview</h3>
+        <p class="render-feature-copy">Sama, at first light. Mornings, gold, and the art of arriving.</p>
+      </div>
+      <div class="render-feature-card">
+        <span class="render-feature-label">Feature II</span>
+        <h3 class="render-feature-title">The Discourse</h3>
+        <p class="render-feature-copy">Four essays on synthetic beauty, stolen faces, and the mirror that learned to dress you.</p>
+      </div>
+      <div class="render-feature-card">
+        <span class="render-feature-label">Feature III</span>
+        <h3 class="render-feature-title">Sound &amp; Vision</h3>
+        <p class="render-feature-copy">First Light, the EP — five tracks. Golden Hour — her first short film.</p>
+      </div>
+    </div>
+    <div class="render-spread-wrap">
+      <img src="render-spread.jpg" alt="IGNITION — the Issue 001 center spread" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="render-spread-placeholder" style="display:none">
+        <span style="font-family:var(--render-display);font-size:clamp(1.2rem,3vw,2rem);font-weight:600;letter-spacing:.1em;background:var(--render-foil);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">IGNITION</span>
+      </div>
+      <div class="render-spread-caption">The Center Spread · Pages 034—035</div>
+    </div>
+  </div>
+
+  <div class="render-rule"></div>
+
+  <!-- 3. Pull-quote -->
+  <div class="render-pullquote reveal">
+    <q>Perfection photographs politely. Intention photographs forever.</q>
+    <div class="render-pullquote-attr">Sama · Issue 001</div>
+  </div>
+
+  <div class="render-rule"></div>
+
+  <!-- 4. BE RENDERED -->
+  <div class="render-casting">
+    <div class="render-casting-head reveal">
+      <div class="render-eyebrow">Open Casting</div>
+      <h2 class="render-casting-title render-foil-text">BE RENDERED</h2>
+      <span class="render-casting-subtitle">an open casting</span>
+      <p class="render-casting-copy">RENDER casts real models for a synthetic editorial of their own — The Rendered Guest: two pages, in print, in a future issue. Three photos. Your handle. Your written consent — your face stays yours. That's the whole point of this house.</p>
+    </div>
+    <form class="render-form reveal delay-1" id="renderCastingForm" novalidate>
+      <div class="render-form-row">
+        <div class="render-form-group">
+          <label for="rc-legal-name">Full Legal Name *</label>
+          <input type="text" id="rc-legal-name" name="legal_name" placeholder="As on your ID" required />
+        </div>
+        <div class="render-form-group">
+          <label for="rc-credit-name">Print Credit Name *</label>
+          <input type="text" id="rc-credit-name" name="credit_name" placeholder="How you'd like to appear in print" required />
+        </div>
+      </div>
+      <div class="render-form-row">
+        <div class="render-form-group">
+          <label for="rc-dob">Date of Birth *</label>
+          <input type="date" id="rc-dob" name="dob" required />
+          <span class="render-age-error" id="renderAgeError">RENDER casts adults only.</span>
+        </div>
+        <div class="render-form-group">
+          <label for="rc-ig">Instagram Handle *</label>
+          <input type="text" id="rc-ig" name="instagram" placeholder="@yourhandle" required />
+        </div>
+      </div>
+      <div class="render-form-row">
+        <div class="render-form-group">
+          <label for="rc-email">Email *</label>
+          <input type="email" id="rc-email" name="email" placeholder="your@email.com" required />
+        </div>
+        <div class="render-form-group">
+          <label for="rc-location">Country / State *</label>
+          <input type="text" id="rc-location" name="location" placeholder="e.g. New York, USA" required />
+        </div>
+      </div>
+      <div class="render-form-group">
+        <label for="rc-notes">Style Notes, Boundaries, Hard No's</label>
+        <textarea id="rc-notes" name="notes" placeholder="Optional — tell us what you're about and what's off the table."></textarea>
+      </div>
+      <div class="render-photo-note">
+        Do not upload photos here. After your application is received, reply to our confirmation email with your 3 photographs to complete your submission.
+      </div>
+      <div class="render-consent-wrap">
+        <input type="checkbox" id="rc-consent" name="consent" required />
+        <label for="rc-consent" class="render-consent-label">I am 18 or older. I agree to the RENDER Likeness Release. If selected, RENDER will create AI-generated images based on my likeness for the magazine and its promotion; I will approve my rendered images before publication; all published images are disclosed as synthetic; I may withdraw any time before publication. I own or have permission to use the photos I submit.</label>
+      </div>
+      <div class="render-form-group">
+        <label for="rc-signature">Typed Signature *</label>
+        <input type="text" id="rc-signature" name="signature" placeholder="Type your full name to sign" required />
+      </div>
+      <div>
+        <button type="submit" class="render-submit" id="renderSubmitBtn">Submit Application</button>
+        <div class="render-form-status" id="renderFormStatus"></div>
+      </div>
+    </form>
+  </div>
+
+  <div class="render-rule"></div>
+
+  <!-- 5. FAQ -->
+  <div class="render-faq reveal">
+    <div class="render-section-eyebrow" style="margin-bottom:32px">Questions</div>
+    <div class="render-faq-item">
+      <button class="render-faq-q" aria-expanded="false">Is this AI-generated?<span class="render-faq-icon">+</span></button>
+      <div class="render-faq-a">Proudly. Every image of Sama is synthetic and the colophon says so in print. What you're buying is not a deception — it's a rehearsal for the future.</div>
+    </div>
+    <div class="render-faq-item">
+      <button class="render-faq-q" aria-expanded="false">Is there a print edition?<span class="render-faq-icon">+</span></button>
+      <div class="render-faq-a">Coming. Digital subscribers get first access to the numbered first print run.</div>
+    </div>
+    <div class="render-faq-item">
+      <button class="render-faq-q" aria-expanded="false">Can I be in RENDER?<span class="render-faq-icon">+</span></button>
+      <div class="render-faq-a">Yes — that's what BE RENDERED is. Apply above; we read everything. We print the fearless.</div>
+    </div>
+    <div class="render-faq-item">
+      <button class="render-faq-q" aria-expanded="false">Refunds?<span class="render-faq-icon">+</span></button>
+      <div class="render-faq-a">It's a magazine, darling. The issues you've opened are yours to keep.</div>
+    </div>
+  </div>
+
+  <div class="render-rule"></div>
+
+  <!-- 6. Closing band -->
+  <div class="render-closing reveal">
+    <div class="render-closing-wordmark render-foil-text">RENDER</div>
+    <div class="render-badge">Entirely Synthetic · Entirely Real</div>
+    <div class="render-closing-issue">Issue 002 · Afterglow · August 2026</div>
+    <div class="render-ctas" style="justify-content:center">
+      <a href="https://rendermag.gumroad.com/l/issue-001" target="_blank" rel="noopener" class="render-cta-primary">Buy Issue 001 — $6.99</a>
+      <a href="https://render.substack.com" target="_blank" rel="noopener" class="render-cta-ghost">Subscribe — $49/yr</a>
+    </div>
+    <a href="https://instagram.com/foreverroyalsama" target="_blank" rel="noopener" class="render-closing-ig">@foreverroyalsama on Instagram</a>
+  </div>
+  <div class="render-disclosure">All imagery of Sama is synthetic and published as such.</div>
+
 </section>
 
 <!-- FOOTER -->
@@ -3890,7 +4628,7 @@ const io = new IntersectionObserver(entries => {
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 /* NAV SCROLLSPY */
-const navSections = ['about', 'music', 'videos', 'films', 'gallery', 'events', 'social', 'booking', 'ai-tools'];
+const navSections = ['about', 'music', 'videos', 'films', 'gallery', 'events', 'social', 'booking', 'ai-tools', 'magazine'];
 const navLinks = document.querySelectorAll('.nav-links a');
 const navObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -3909,6 +4647,111 @@ document.addEventListener('keydown', e => {
     closeLightbox();
   }
 });
+
+/* ============================================
+   RENDER MAGAZINE
+   ============================================ */
+const GUMROAD_URL  = 'https://rendermag.gumroad.com/l/issue-001';
+const SUBSTACK_URL = 'https://render.substack.com';
+
+/* Analytics shim — fires if site gains analytics later */
+function renderTrack(event) {
+  if (typeof gtag === 'function') gtag('event', event);
+}
+document.getElementById('renderBuyBtn')?.addEventListener('click', () => renderTrack('buy_click'));
+document.getElementById('renderSubBtn')?.addEventListener('click', () => renderTrack('subscribe_click'));
+document.querySelectorAll('a[href="' + GUMROAD_URL + '"]').forEach(a =>
+  a.addEventListener('click', () => renderTrack('buy_click')));
+
+/* FAQ accordion */
+document.querySelectorAll('.render-faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.render-faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.render-faq-item.open').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.render-faq-q').setAttribute('aria-expanded', 'false');
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
+
+/* BE RENDERED casting form */
+const castingForm   = document.getElementById('renderCastingForm');
+const castingStatus = document.getElementById('renderFormStatus');
+const castingSubmit = document.getElementById('renderSubmitBtn');
+const ageError      = document.getElementById('renderAgeError');
+
+function calcAge(dobStr) {
+  const dob  = new Date(dobStr);
+  const today = new Date();
+  let age = today.getFullYear() - dob.getFullYear();
+  const m = today.getMonth() - dob.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+  return age;
+}
+
+if (castingForm) {
+  document.getElementById('rc-dob').addEventListener('change', function() {
+    const under = this.value && calcAge(this.value) < 18;
+    ageError.style.display = under ? 'block' : 'none';
+  });
+
+  castingForm.addEventListener('submit', e => {
+    e.preventDefault();
+    ageError.style.display = 'none';
+    castingStatus.className = 'render-form-status';
+    castingStatus.textContent = '';
+
+    const dob       = castingForm.querySelector('[name="dob"]').value;
+    const consent   = castingForm.querySelector('[name="consent"]').checked;
+    const signature = castingForm.querySelector('[name="signature"]').value.trim();
+    const legalName = castingForm.querySelector('[name="legal_name"]').value.trim();
+    const email     = castingForm.querySelector('[name="email"]').value.trim();
+
+    if (dob && calcAge(dob) < 18) {
+      ageError.style.display = 'block';
+      ageError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    if (!consent) {
+      castingStatus.textContent = 'Please check the consent box to proceed.';
+      castingStatus.className = 'render-form-status error';
+      return;
+    }
+    if (!signature) {
+      castingStatus.textContent = 'A typed signature is required.';
+      castingStatus.className = 'render-form-status error';
+      return;
+    }
+
+    const fields = Object.fromEntries(new FormData(castingForm));
+    const body = encodeURIComponent(
+      'BE RENDERED Application\n' +
+      '========================\n' +
+      'Legal Name: '    + (fields.legal_name  || '') + '\n' +
+      'Credit Name: '   + (fields.credit_name || '') + '\n' +
+      'DOB: '           + (fields.dob         || '') + '\n' +
+      'Instagram: '     + (fields.instagram   || '') + '\n' +
+      'Email: '         + (fields.email        || '') + '\n' +
+      'Location: '      + (fields.location    || '') + '\n' +
+      'Notes: '         + (fields.notes       || '—') + '\n' +
+      'Consent: Yes\n' +
+      'Signature: '     + (fields.signature   || '') + '\n' +
+      'Submitted: '     + new Date().toISOString()
+    );
+    const subject = encodeURIComponent('BE RENDERED Application — ' + legalName);
+    window.location.href = 'mailto:foreverroyalsama@gmail.com?subject=' + subject + '&body=' + body;
+
+    renderTrack('casting_submit');
+    castingStatus.textContent = 'Application opening in your email app. Attach your 3 photographs and hit send to complete your submission.';
+    castingStatus.className = 'render-form-status success';
+    castingForm.reset();
+  });
+}
 </script>
 
 <!-- SOUND ENGINE -->

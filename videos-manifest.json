@@ -36,6 +36,8 @@
     { "file": "video-36.mp4", "title": "Video 36", "width": 1920, "height": 1080 },
     { "file": "video-37.mp4", "title": "Cinematic", "width": 1920, "height": 1080 },
     { "file": "video-38.mp4", "title": "Photographer", "width": 1920, "height": 1080 },
-    { "file": "video-39.mp4", "title": "Coffee", "width": 1920, "height": 1080 }
+    { "file": "video-39.mp4", "title": "Coffee", "width": 1920, "height": 1080 },
+    { "file": "video-40.mp4", "title": "Video 40", "width": 1920, "height": 1080 },
+    { "file": "video-41.mp4", "title": "Video 41", "width": 1920, "height": 1080 }
   ]
 }
